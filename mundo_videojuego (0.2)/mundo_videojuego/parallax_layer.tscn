@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://eykbia4uogu6"]
+
+[ext_resource type="Script" uid="uid://bsja41n2vhbfw" path="res://parallax_layer.gd" id="1_4wu5j"]
+[ext_resource type="PackedScene" uid="uid://56wixtu8yjql" path="res://background.tscn" id="2_1pdhy"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+script = ExtResource("1_4wu5j")
+
+[node name="Background" parent="ParallaxLayer" instance=ExtResource("2_1pdhy")]
+position = Vector2(180, 274)

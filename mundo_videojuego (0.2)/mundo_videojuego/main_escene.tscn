@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://knnf8qipor43"]
+
+[ext_resource type="PackedScene" uid="uid://h3bdb3rngii5" path="res://player.tscn" id="2_2w7jx"]
+[ext_resource type="PackedScene" uid="uid://dw43g2vwdnfp6" path="res://Niveles/Primer nivel.tscn" id="2_6e30x"]
+[ext_resource type="Script" uid="uid://bmvx3lho1ufys" path="res://node_2d.gd" id="3_2w7jx"]
+[ext_resource type="Script" uid="uid://qjo8vp1v0f43" path="res://spawner_obst.gd" id="4_2w7jx"]
+[ext_resource type="PackedScene" uid="uid://cq3in32itnvji" path="res://Obstaculo.tscn" id="5_6e30x"]
+[ext_resource type="PackedScene" uid="uid://bp8l61rx7n38s" path="res://Enemy.tscn" id="6_qnqo7"]
+
+[node name="MainEscene" type="Node2D"]
+position = Vector2(0, -3)
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("3_2w7jx")
+
+[node name="Primer Nivel" parent="Node2D" instance=ExtResource("2_6e30x")]
+position = Vector2(388, 228)
+
+[node name="Primer Nivel2" parent="Node2D" instance=ExtResource("2_6e30x")]
+position = Vector2(2689, 228)
+
+[node name="Player" parent="." instance=ExtResource("2_2w7jx")]
+position = Vector2(-1, 240)
+scale = Vector2(0.11580979, 0.11629165)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(273, 226)
+zoom = Vector2(2, 2)
+
+[node name="Spawner obst" type="Node2D" parent="."]
+script = ExtResource("4_2w7jx")
+obstacle_scene = ExtResource("5_6e30x")
+enemy_scene = ExtResource("6_qnqo7")

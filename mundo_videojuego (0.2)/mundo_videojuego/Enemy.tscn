@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://bp8l61rx7n38s"]
+
+[ext_resource type="Script" uid="uid://cgpqbxwnuolcv" path="res://enemy.gd" id="1_s7bn3"]
+[ext_resource type="Texture2D" uid="uid://bc0ds80ngfpal" path="res://icon.svg" id="1_tt7e2"]
+[ext_resource type="PackedScene" uid="uid://dsj2elka7wumm" path="res://projectile.tscn" id="2_2hac7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7bn3"]
+size = Vector2(118, 118)
+
+[node name="Area2D" type="Area2D"]
+scale = Vector2(0.13745986, 0.14304407)
+script = ExtResource("1_s7bn3")
+projectile_scene = ExtResource("2_2hac7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_tt7e2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_s7bn3")
