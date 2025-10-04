@@ -1,20 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://c0oyu6i7mc77h"]
 
-[ext_resource type="Texture2D" uid="uid://bc0ds80ngfpal" path="res://icon.svg" id="1_e4g2f"]
-[ext_resource type="Script" uid="uid://c8yfkbub8a0ib" path="res://projectil_player.gd" id="1_ml707"]
+[ext_resource type="Script" uid="uid://c8yfkbub8a0ib" path="res://Scripts/projectil_player.gd" id="1_yhl5e"]
+[ext_resource type="Texture2D" uid="uid://bc0ds80ngfpal" path="res://icon.svg" id="2_rcnfa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ml707"]
 size = Vector2(8, 7)
 
 [node name="Area2D" type="Area2D"]
 scale = Vector2(1.2033583, 1.2299352)
-script = ExtResource("1_ml707")
+script = ExtResource("1_yhl5e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ml707")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.0625, 0.0546875)
-texture = ExtResource("1_e4g2f")
+texture = ExtResource("2_rcnfa")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
