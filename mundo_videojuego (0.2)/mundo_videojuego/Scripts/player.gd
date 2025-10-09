@@ -4,7 +4,9 @@ extends CharacterBody2D
 var current_lane := 1  
 
 @export var speed: float = 200.0
+var normal_speed: float = 200.0
 @export var Aumento: float = 0
+@export var Hearts: int = 5
 
 @export var projectile_scene: PackedScene
 @export var shoot_force: float = 700.0  # más rápido y más lejos
@@ -46,3 +48,17 @@ func shoot() -> void:
 	projectile.velocity = dir * shoot_force
 	
 	get_parent().add_child(projectile)
+	
+	#Funcion para cuando el player recibe daño
+func take_damage(amount: int):
+	Hearts -= amount
+	if(Hearts<=0):
+		get_tree().paused = true
+	
+	#Funcion para el estado de relantizacion del player
+func slow_down(amount: float, duration: float): 
+	speed = max(speed - amount, 0)
+	print("Jugador ralentizado")
+	await get_tree().create_timer(duration).timeout
+	speed = normal_speed
+	print("Velocidad restaurada")

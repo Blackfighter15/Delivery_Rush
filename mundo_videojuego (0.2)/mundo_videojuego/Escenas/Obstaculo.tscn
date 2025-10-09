@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cq3in32itnvji"]
 
-[ext_resource type="Script" uid="uid://dw7wexh15p1m5" path="res://Scripts/area_2d.gd" id="1_naxem"]
+[ext_resource type="Script" uid="uid://dw7wexh15p1m5" path="res://Scripts/Obstaculo.gd" id="1_naxem"]
 [ext_resource type="Texture2D" uid="uid://bo3ocvudemxvx" path="res://Assets/Roguelike-modern-city/Tiles/tile_0325.png" id="2_25lpp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_25lpp"]

@@ -52,3 +52,7 @@ func _fire_projectile():
 	get_parent().add_child(proj)
 	proj.position = position
 	proj.direction = (target.position - position).normalized()
+	
+func _on_body_entered(body: Node2D) -> void:
+	body.take_damage(20.0)
+	body.slow_down(100, 3)

@@ -12,4 +12,7 @@ func _process(delta):
 func _on_body_entered(body):
 	if body.is_in_group("player"):
 		print("💥 Impacto en el jugador")
+		body.take_damage(1)
+		body.slow_down(100, 3)
+		print(body.Hearts)
 		queue_free()
