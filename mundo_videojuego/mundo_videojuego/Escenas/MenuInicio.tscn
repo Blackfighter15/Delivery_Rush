@@ -1,0 +1,104 @@
+[gd_scene load_steps=11 format=3 uid="uid://37htuga4saay"]
+
+[ext_resource type="Script" uid="uid://y387lwnamoo1" path="res://Scripts/menu_inicio.gd" id="1_bh4mo"]
+[ext_resource type="Texture2D" uid="uid://brxqi1eca63li" path="res://Assets/BackGroundInicio.png" id="1_bj24b"]
+[ext_resource type="Texture2D" uid="uid://ckrl1n3ohuxo7" path="res://Assets/Mochila_repartidor-removebg-preview.png" id="2_gmftl"]
+[ext_resource type="FontFile" uid="uid://d16ypl06jv8i5" path="res://Assets/kenney_ui-pack/Font/Kenney Future Narrow.ttf" id="3_iy1r8"]
+[ext_resource type="Texture2D" uid="uid://b507nbkw7w610" path="res://Assets/kenney_ui-pack/PNG/Red/Default/button_round_depth_flat.png" id="4_fkb7y"]
+[ext_resource type="Texture2D" uid="uid://dolmj0tiuxtdf" path="res://Assets/kenney_ui-pack/PNG/Red/Default/button_round_depth_gradient.png" id="5_bh4mo"]
+[ext_resource type="Texture2D" uid="uid://b75towpvy0607" path="res://Assets/kenney_ui-pack/PNG/arrow_basic_e.png" id="6_fkb7y"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bj24b"]
+font = ExtResource("3_iy1r8")
+font_size = 100
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_e2ud0"]
+
+[sub_resource type="GDScript" id="GDScript_e2ud0"]
+script/source = "extends TextureButton
+
+@export var escena_destino: String = \"res://Escenas/inicio_presionado.tscn\"
+@onready var boton: TextureButton = $TextureButton  # Asegúrate que el nombre coincida
+
+func _ready():
+	if boton:
+		boton.pressed.connect(_on_boton_presionado)
+	else:
+		print(\"Error: No se encontró el nodo TextureButton\")
+
+func _on_boton_presionado():
+	cambiar_escena()
+
+func cambiar_escena():
+	get_tree().change_scene_to_file(escena_destino)
+"
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bh4mo")
+
+[node name="BackGroundInicio" type="Sprite2D" parent="."]
+position = Vector2(576.06244, 319)
+scale = Vector2(0.7487793, 0.6425781)
+texture = ExtResource("1_bj24b")
+
+[node name="MochilaRepartidorRemovebgPreview" type="Sprite2D" parent="."]
+position = Vector2(573, 313.00003)
+scale = Vector2(1.0686275, 1.0537174)
+texture = ExtResource("2_gmftl")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -503.0
+offset_top = 10.0
+offset_right = 475.0
+offset_bottom = 148.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -490.5
+offset_top = 20.0
+offset_right = 486.5
+offset_bottom = 133.0
+grow_horizontal = 2
+text = "Delivert Rush"
+label_settings = SubResource("LabelSettings_bj24b")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49400002
+anchor_top = 0.836
+anchor_right = 0.49400002
+anchor_bottom = 0.836
+offset_left = -81.08798
+offset_top = -73.72803
+offset_right = -17.088013
+offset_bottom = 1.2719727
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2.5499072, 2.4407904)
+toggle_mode = true
+button_group = SubResource("ButtonGroup_e2ud0")
+texture_normal = ExtResource("4_fkb7y")
+texture_pressed = ExtResource("5_bh4mo")
+script = SubResource("GDScript_e2ud0")
+
+[node name="ArrowBasicE" type="Sprite2D" parent="."]
+position = Vector2(575.00006, 541)
+scale = Vector2(2.59375, 2.46875)
+texture = ExtResource("6_fkb7y")
+
+[connection signal="pressed" from="TextureButton" to="TextureButton" method="_on_pressed"]
