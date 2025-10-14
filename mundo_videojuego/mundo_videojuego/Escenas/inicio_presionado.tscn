@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bml0q77tr61fc"]
+[gd_scene load_steps=10 format=3 uid="uid://bml0q77tr61fc"]
 
 [ext_resource type="Texture2D" uid="uid://brxqi1eca63li" path="res://Assets/BackGroundInicio.png" id="1_0obls"]
+[ext_resource type="Script" uid="uid://cdsb1kxetnsnt" path="res://Scripts/inicio_presionado.gd" id="1_vu6lu"]
 [ext_resource type="Texture2D" uid="uid://bu8dqor2ygtty" path="res://Assets/Mochila_abierta-removebg-preview.png" id="2_untpm"]
 [ext_resource type="Texture2D" uid="uid://c2deqecd0g0rs" path="res://Assets/kenney_ui-pack/PNG/Red/Default/button_rectangle_depth_flat.png" id="3_ipbi0"]
 [ext_resource type="Texture2D" uid="uid://bbpxb66mo43lp" path="res://Assets/kenney_ui-pack/PNG/Red/Default/button_rectangle_depth_gradient.png" id="4_pixam"]
@@ -25,6 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_vu6lu")
 
 [node name="BackGroundInicio" type="Sprite2D" parent="."]
 position = Vector2(563.99994, 417)
@@ -36,7 +38,7 @@ position = Vector2(532, 575)
 scale = Vector2(4.3783703, 2.999898)
 texture = ExtResource("2_untpm")
 
-[node name="TextureButton" type="TextureButton" parent="."]
+[node name="botoncomenzar" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -53,7 +55,7 @@ scale = Vector2(1.83707, 1.7443362)
 texture_normal = ExtResource("3_ipbi0")
 texture_pressed = ExtResource("4_pixam")
 
-[node name="Label" type="Label" parent="TextureButton"]
+[node name="Label" type="Label" parent="botoncomenzar"]
 layout_mode = 0
 offset_left = 11.0
 offset_top = 15.0
@@ -62,7 +64,7 @@ offset_bottom = 45.0
 text = "Comenzar"
 label_settings = SubResource("LabelSettings_vu6lu")
 
-[node name="TextureButton3" type="TextureButton" parent="."]
+[node name="botonsalir" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -78,7 +80,7 @@ grow_vertical = 2
 texture_normal = ExtResource("3_ipbi0")
 texture_pressed = ExtResource("4_pixam")
 
-[node name="Label" type="Label" parent="TextureButton3"]
+[node name="Label" type="Label" parent="botonsalir"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -92,7 +94,7 @@ offset_bottom = 15.519999
 text = "Salir"
 label_settings = SubResource("LabelSettings_0wfaq")
 
-[node name="TextureButton2" type="TextureButton" parent="."]
+[node name="botonconfigurar" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -109,7 +111,7 @@ scale = Vector2(1.4640723, 1.6012659)
 texture_normal = ExtResource("3_ipbi0")
 texture_pressed = ExtResource("4_pixam")
 
-[node name="Label" type="Label" parent="TextureButton2"]
+[node name="Label" type="Label" parent="botonconfigurar"]
 layout_mode = 0
 offset_left = 11.0
 offset_top = 17.0
@@ -117,3 +119,6 @@ offset_right = 206.0
 offset_bottom = 46.0
 text = "Configurar"
 label_settings = SubResource("LabelSettings_5u2kv")
+
+[connection signal="pressed" from="botoncomenzar" to="." method="_on_botoncomenzar_pressed"]
+[connection signal="pressed" from="botonsalir" to="." method="_on_botonsalir_pressed"]

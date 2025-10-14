@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+
+var pause_screen: Control
+
 @export var lanes = [245, 275, 310, 340]  
 var current_lane := 1  
 
@@ -10,6 +13,18 @@ var normal_speed: float = 200.0
 
 @export var projectile_scene: PackedScene
 @export var shoot_force: float = 700.0  # más rápido y más lejos
+
+func _ready():
+	# Cargar e instanciar la escena del menú pausa
+	var pause_scene = preload("res://Escenas/menu_esc.tscn")
+	pause_screen = pause_scene.instantiate()
+	
+	# Usar call_deferred para añadir el hijo de forma segura
+	get_tree().root.call_deferred("add_child", pause_screen)
+	
+	# Esperar un frame para que el nodo esté completamente listo
+	await get_tree().process_frame
+	pause_screen.visible = false  # Ocultar al inicio
 
 func _physics_process(_delta: float) -> void:
 	var input = Vector2.ZERO
@@ -62,3 +77,15 @@ func slow_down(amount: float, duration: float):
 	await get_tree().create_timer(duration).timeout
 	speed = normal_speed
 	print("Velocidad restaurada")
+	
+	
+func _input(event):
+	if event.is_action_pressed("Pause"): # Asegúrate de tener esta acción en el Input Map
+		toggle_pause()
+
+func toggle_pause():
+	var should_pause = !get_tree().paused
+	get_tree().paused = should_pause
+	
+	if pause_screen:
+		pause_screen.visible = should_pause

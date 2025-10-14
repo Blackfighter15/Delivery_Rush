@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://cuxxya88pv6jc"]
+
+[ext_resource type="FontFile" uid="uid://cogtpnm5ulrec" path="res://Assets/kenney_ui-pack/Font/Kenney Future.ttf" id="1_amlv4"]
+[ext_resource type="Texture2D" uid="uid://c5ap4hp66k2xx" path="res://Assets/kenney_ui-pack/Vector/Yellow/button_square_border.svg" id="2_i7eh4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i7eh4"]
+texture = ExtResource("2_i7eh4")
+
+[resource]
+Label/fonts/font = ExtResource("1_amlv4")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_i7eh4")
