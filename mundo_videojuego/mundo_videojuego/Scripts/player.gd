@@ -67,8 +67,16 @@ func shoot() -> void:
 	#Funcion para cuando el player recibe daño
 func take_damage(amount: int):
 	Hearts -= amount
-	if(Hearts<=0):
-		get_tree().paused = true
+	if Hearts <= 0:
+		Hearts = 0  # Asegurar que no sea negativo
+		game_over()
+		
+func game_over():
+	get_tree().paused = true
+	# Cargar y mostrar la escena de game over
+	var game_over_scene = preload("res://Escenas/game_over.tscn")
+	var game_over_instance = game_over_scene.instantiate()
+	get_tree().root.add_child(game_over_instance)
 	
 	#Funcion para el estado de relantizacion del player
 func slow_down(amount: float, duration: float): 

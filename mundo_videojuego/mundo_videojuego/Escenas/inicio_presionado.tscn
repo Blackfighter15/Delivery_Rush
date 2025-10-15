@@ -122,3 +122,4 @@ label_settings = SubResource("LabelSettings_5u2kv")
 
 [connection signal="pressed" from="botoncomenzar" to="." method="_on_botoncomenzar_pressed"]
 [connection signal="pressed" from="botonsalir" to="." method="_on_botonsalir_pressed"]
+[connection signal="pressed" from="botonconfigurar" to="." method="_on_botonconfigurar_pressed"]

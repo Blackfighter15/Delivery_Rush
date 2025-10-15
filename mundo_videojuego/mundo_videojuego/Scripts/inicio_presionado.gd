@@ -6,12 +6,7 @@ extends Control
 @onready var boton_configurar: TextureButton = $botonconfigurar
 @onready var boton_Salir: TextureButton = $botonsalir
 func _ready() -> void:
-	if boton_comenzar:
-		boton_comenzar.pressed.connect(_on_botoncomenzar_pressed)
-	elif boton_configurar:
-		pass
-	else: 
-		boton_Salir.pressed.connect(_on_botonsalir_pressed)
+	pass
 	
 func _on_botoncomenzar_pressed() -> void:
 	cambiar_escena_juego()
@@ -21,3 +16,7 @@ func cambiar_escena_juego():
 
 func _on_botonsalir_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_botonconfigurar_pressed() -> void:
+	pass # Replace with function body.

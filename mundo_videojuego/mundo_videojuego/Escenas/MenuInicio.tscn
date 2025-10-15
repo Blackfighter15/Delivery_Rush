@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://37htuga4saay"]
+[gd_scene load_steps=10 format=3 uid="uid://37htuga4saay"]
 
 [ext_resource type="Script" uid="uid://y387lwnamoo1" path="res://Scripts/menu_inicio.gd" id="1_bh4mo"]
 [ext_resource type="Texture2D" uid="uid://brxqi1eca63li" path="res://Assets/BackGroundInicio.png" id="1_bj24b"]
@@ -13,25 +13,6 @@ font = ExtResource("3_iy1r8")
 font_size = 100
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_e2ud0"]
-
-[sub_resource type="GDScript" id="GDScript_e2ud0"]
-script/source = "extends TextureButton
-
-@export var escena_destino: String = \"res://Escenas/inicio_presionado.tscn\"
-@onready var boton: TextureButton = $TextureButton  # Asegúrate que el nombre coincida
-
-func _ready():
-	if boton:
-		boton.pressed.connect(_on_boton_presionado)
-	else:
-		print(\"Error: No se encontró el nodo TextureButton\")
-
-func _on_boton_presionado():
-	cambiar_escena()
-
-func cambiar_escena():
-	get_tree().change_scene_to_file(escena_destino)
-"
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -94,7 +75,6 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_e2ud0")
 texture_normal = ExtResource("4_fkb7y")
 texture_pressed = ExtResource("5_bh4mo")
-script = SubResource("GDScript_e2ud0")
 
 [node name="ArrowBasicE" type="Sprite2D" parent="."]
 position = Vector2(575.00006, 541)

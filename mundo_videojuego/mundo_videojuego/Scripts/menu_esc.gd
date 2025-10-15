@@ -5,11 +5,6 @@ extends Control
 func _ready() -> void:
 	   # Configurar procesamiento cuando está en pausa
 	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	
-	# Conectar los botones
-	$PanelContainer/VBoxContainer/Resume.pressed.connect(_on_resume_pressed)
-	$PanelContainer/VBoxContainer/salir.pressed.connect(_on_salir_pressed)
-	
 	# Ocultar al inicio
 	visible = false
 

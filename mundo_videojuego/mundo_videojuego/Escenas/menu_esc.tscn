@@ -87,11 +87,11 @@ texture = ExtResource("2_8mbkh")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = -72.4797
-offset_top = -198.65926
-offset_right = 106.5203
-offset_bottom = -141.65926
-text = "Menu"
+offset_left = -83.92386
+offset_top = -202.84158
+offset_right = 95.07614
+offset_bottom = -145.84158
+text = "Pausa"
 label_settings = SubResource("LabelSettings_dkht2")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
