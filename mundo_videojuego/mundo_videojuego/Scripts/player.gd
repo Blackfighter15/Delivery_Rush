@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-
 var pause_screen: Control
 
 @export var lanes = [245, 275, 310, 340]  
