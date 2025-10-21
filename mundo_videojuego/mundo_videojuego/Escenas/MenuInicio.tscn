@@ -54,7 +54,7 @@ offset_top = 20.0
 offset_right = 486.5
 offset_bottom = 133.0
 grow_horizontal = 2
-text = "Delivert Rush"
+text = "Delivery Rush"
 label_settings = SubResource("LabelSettings_bj24b")
 
 [node name="TextureButton" type="TextureButton" parent="."]

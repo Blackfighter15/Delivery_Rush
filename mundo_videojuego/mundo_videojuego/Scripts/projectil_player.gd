@@ -1,15 +1,25 @@
 extends Area2D
 
 @export var velocity: Vector2 = Vector2.ZERO
-@export var gravity_force: float = 0.0  # sin curva
+@export var gravity_force: float = 0.0
 
+# Almacena solo la referencia al jugador y el producto que lleva.
+var player_node: CharacterBody2D = null
+var product_to_deliver: String = "" 
+
+# 🎯 FUNCIÓN DE INICIALIZACIÓN: Recibe los datos del Player
+func initialize(player: CharacterBody2D, selected_product: String):
+	player_node = player
+	product_to_deliver = selected_product
+	# Ya no necesita el _ready() que daba error, porque se inicializa aquí.
+	
 func _ready():
 	pass
 
 func _physics_process(delta: float) -> void:
 	position += velocity * delta
 
-	# Aplicar gravedad si es necesario
+	# Aplicar gravedad
 	velocity.y += gravity_force * delta
 
 	# eliminar si se sale de la pantalla
@@ -18,13 +28,12 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("objetivo"):
-		print("¡Le diste a una persona!")
-		body.queue_free()
-		queue_free()
-
-		# Buscar el nodo que maneja el nivel
-		var nivel = get_tree().get_first_node_in_group("nivel")
-		if nivel:
-			nivel.registrar_entrega()
+		
+		# 🎯 Reportar la entrega al Player
+		if is_instance_valid(player_node):
+			player_node.track_delivery_progress(product_to_deliver)
 		else:
-			print("⚠️ No se encontró el nodo del nivel.")
+			push_error("❌ Proyectil no inicializado. No se pudo registrar la entrega.")
+			
+		body.queue_free() # Destruye el objetivo
+		queue_free()    # Destruye el proyectil
