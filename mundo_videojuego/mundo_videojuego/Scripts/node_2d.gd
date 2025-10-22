@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var total_entregas: int = 10
-@export var tiempo_limite: float = 60.0  # segundos
+@export var tiempo_limite: float = 90.0  # segundos
 @export var tiempo_spawn: float = 3.0    # cada cuánto se genera una nueva persona
 
 var entregas_realizadas: int = 0
@@ -13,6 +13,7 @@ var spawn_timer: float = 0.0
 @export var block_width: int = 2000
 @export var persona_scene: PackedScene
 @export var spawn_chance: float = 0.3
+@export var tipos_clientes: Array[ClienteDatos] # Array de tus recursos ClienteDatos
 
 @onready var blocks = [$"Primer Nivel", $"Primer Nivel2"]
 var personas_por_bloque = {}
@@ -69,12 +70,30 @@ func generar_persona_aleatoria():
 	
 	var spawn_point = spawn_points[randi() % spawn_points.size()]
 	var persona = persona_scene.instantiate()
+	asignar_tipo_cliente(persona)
 	add_child(persona)
 	persona.position = spawn_point.global_position
 	
 	if block not in personas_por_bloque:
 		personas_por_bloque[block] = []
 	personas_por_bloque[block].append(persona)
+	
+func asignar_tipo_cliente(persona_instancia):
+	if tipos_clientes.is_empty():
+		return
+
+	# 1. Selecciona un recurso de datos al azar
+	var datos_aleatorios = tipos_clientes.pick_random()
+
+	# 2. Obtiene la instancia del cliente *como* la clase Cliente
+	#    Esto garantiza que Godot reconozca y pueda acceder a la variable 'datos_cliente'
+	#    que está definida en el script Cliente.gd (extends StaticBody2D).
+	var cliente = persona_instancia as Cliente 
+
+	if is_instance_valid(cliente) and datos_aleatorios != null:
+		# Asigna el recurso a la propiedad del script 'Cliente'
+		cliente.datos_cliente = datos_aleatorios
+		print("👤 Nuevo cliente generado. Tipo: ", datos_aleatorios.tipo_comida)
 	
 func registrar_entrega():
 	entregas_realizadas += 1
@@ -94,6 +113,7 @@ func generar_personas_para_bloque(block):
 	for spawn_point in spawn_points:
 		if randf() < spawn_chance:
 			var persona = persona_scene.instantiate()
+			asignar_tipo_cliente(persona)
 			add_child(persona)
 			persona.position = spawn_point.global_position
 			personas_por_bloque[block].append(persona)

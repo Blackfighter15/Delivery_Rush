@@ -28,12 +28,9 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("objetivo"):
-		
-		# 🎯 Reportar la entrega al Player
-		if is_instance_valid(player_node):
-			player_node.track_delivery_progress(product_to_deliver)
-		else:
-			push_error("❌ Proyectil no inicializado. No se pudo registrar la entrega.")
+		# Llamar a la función del cliente para que este verifique el pedido
+		#    Le pasamos el nombre del producto que llevamos.
+			body.interactuar_con_producto(product_to_deliver)
 			
-		body.queue_free() # Destruye el objetivo
-		queue_free()    # Destruye el proyectil
+			# 3. Eliminar el proyectil inmediatamente
+			queue_free()

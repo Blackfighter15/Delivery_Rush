@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ClienteDatos" load_steps=3 format=3 uid="uid://bkv02kl682g6k"]
+
+[ext_resource type="Script" uid="uid://tfma6rkhnrn0" path="res://Scripts/ClienteDatos.gd" id="1_w308r"]
+[ext_resource type="Texture2D" uid="uid://bcpo5cqo04bj6" path="res://Assets/Pixel Aventure/Free/Background/Blue.png" id="2_77jna"]
+
+[resource]
+script = ExtResource("1_w308r")
+tipo_comida = "sushi"
+textura_sprite = ExtResource("2_77jna")
+metadata/_custom_type_script = "uid://tfma6rkhnrn0"

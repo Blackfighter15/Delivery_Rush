@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ClienteDatos" load_steps=3 format=3 uid="uid://die27sr2awpy1"]
+
+[ext_resource type="Script" uid="uid://tfma6rkhnrn0" path="res://Scripts/ClienteDatos.gd" id="1_yx7ny"]
+[ext_resource type="Texture2D" uid="uid://c7bb0uvejw3im" path="res://Assets/Pixel Aventure/Free/Background/Brown.png" id="2_owjs2"]
+
+[resource]
+script = ExtResource("1_yx7ny")
+tipo_comida = "Pollo_frito"
+textura_sprite = ExtResource("2_owjs2")
+metadata/_custom_type_script = "uid://tfma6rkhnrn0"

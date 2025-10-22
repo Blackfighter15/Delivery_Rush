@@ -9,7 +9,7 @@ var current_lane := 1
 var products = ["Pizza","Hamburguesa","Pollo_frito","sushi","comida_china"]
 var objetivos_entrega: Dictionary = {}
 const MIN_AMOUNT: int = 1
-const MAX_AMOUNT: int = 1
+const MAX_AMOUNT: int = 5
 
 # 📦 Lógica de SELECCIÓN de Producto (¡Añadidas!)
 var current_product_index: int = 0
@@ -42,17 +42,17 @@ func _physics_process(_delta: float) -> void:
 	var input = Vector2.ZERO
 	
 	# ... (código de movimiento existente)
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("Izquierda"):
 		input.x -= 1
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("Derecha"):
 		input.x += 1
 	
 	velocity.x = input.x * speed + Aumento
 	move_and_slide()
 	
-	if Input.is_action_just_pressed("ui_up") and current_lane > 0:
+	if Input.is_action_just_pressed("Arriba") and current_lane > 0:
 		current_lane -= 1
-	elif Input.is_action_just_pressed("ui_down") and current_lane < lanes.size() - 1:
+	elif Input.is_action_just_pressed("Abajo") and current_lane < lanes.size() - 1:
 		current_lane += 1
 	
 	position.y = lerp(position.y, float(lanes[current_lane]), 0.1)
