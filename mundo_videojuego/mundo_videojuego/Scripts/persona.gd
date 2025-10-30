@@ -18,18 +18,19 @@ func interactuar_con_producto(producto_entregado: String):
 	if atendido:
 		return
 
-	# 1. Obtener los tipos de comida
 	var pedido_cliente: String = datos_cliente.tipo_comida
-	var producto_jugador: String = producto_entregado # Producto recibido del proyectil
+	var producto_jugador: String = producto_entregado
 
-	# 2. Comparación
 	if pedido_cliente == producto_jugador:
-		# Entrega correcta
 		print("✅ ¡Entrega exitosa! Cliente satisfecho con:", pedido_cliente)
 		
+		# ✅ Notificar al Player del progreso de entrega
+		# Buscamos al player en el árbol de nodos (debe estar en el grupo "player")
+		var player = get_tree().get_first_node_in_group("player")
+		if player and player.has_method("track_delivery_progress"):
+			player.track_delivery_progress(pedido_cliente, 1)
 	else:
-		# Entrega incorrecta
 		print("❌ ¡Entrega incorrecta! Pedido: %s, Recibido: %s" % [pedido_cliente, producto_jugador])
 	
-	atendido = true # Marcar como atendido
-	queue_free()    # El cliente desaparece
+	atendido = true
+	queue_free()

@@ -6,10 +6,10 @@ var pause_screen: Control
 var current_lane := 1
 
 # Delivery y Misión
-var products = ["Pizza","Hamburguesa","Pollo_frito","sushi","comida_china"]
+var products = ["Pizza","Hamburguesa"]
 var objetivos_entrega: Dictionary = {}
 const MIN_AMOUNT: int = 1
-const MAX_AMOUNT: int = 5
+const MAX_AMOUNT: int = 1
 
 # 📦 Lógica de SELECCIÓN de Producto (¡Añadidas!)
 var current_product_index: int = 0
@@ -136,7 +136,11 @@ func check_for_mission_completion() -> void:
 	
 	if all_goals_met:
 		print("🎉 ¡MISIÓN DE ENTREGA COMPLETADA CON ÉXITO! 🎉")
-		# Por simplicidad, iniciamos una nueva misión.
+		
+		# 🔔 Mostrar escena de victoria
+		var victory_scene = preload("res://Escenas/Pantalla_Victoria.tscn")
+		var victory_instance = victory_scene.instantiate()
+		get_tree().root.add_child(victory_instance)
 		get_tree().paused = true
 		
 # --------------------------------------------------------------------------
