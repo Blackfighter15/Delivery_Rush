@@ -23,6 +23,10 @@ var normal_speed: float = 200.0
 @export var projectile_scene: PackedScene
 @export var shoot_force: float = 700.0
 
+# ⏱️ DELAY / COOLDOWN DE DISPARO
+var can_shoot: bool = true
+@export var shoot_delay: float = 0.8  # 0.2 = 200ms entre disparos (puedes cambiarlo desde el Inspector)
+
 func _ready():
 	# --- Código de pausa ---
 	var pause_scene = preload("res://Escenas/menu_esc.tscn")
@@ -40,16 +44,16 @@ func _ready():
 	# -------------------------
 	# 🎯 CURSOR PERSONALIZADO
 	# -------------------------
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN) # Oculta el cursor del sistema
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
 	var crosshair = Sprite2D.new()
 	crosshair.texture = preload("res://Assets/assets visuales/crosshair.png")
 	crosshair.name = "crosshair"
-	crosshair.scale = Vector2(5, 5) # o el tamaño que necesites
+	crosshair.scale = Vector2(5,5)
+	crosshair.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(crosshair)
-	
-	set_process(true) # Asegura que _process funcione para mover la cruz
 
+	set_process(true)
 
 func _physics_process(_delta: float) -> void:
 	var input = Vector2.ZERO
@@ -69,13 +73,14 @@ func _physics_process(_delta: float) -> void:
 	elif Input.is_action_just_pressed("Abajo") and current_lane < lanes.size() - 1:
 		current_lane += 1
 
-	# Mover suavemente al carril
 	position.y = lerp(position.y, float(lanes[current_lane]), 0.1)
 
-	# Disparo
-	if Input.is_action_just_pressed("shoot"):
+	# 🔫 DISPARO CON DELAY
+	if Input.is_action_just_pressed("shoot") and can_shoot:
 		shoot()
-
+		can_shoot = false
+		await get_tree().create_timer(shoot_delay).timeout
+		can_shoot = true
 
 func shoot() -> void:
 	if projectile_scene == null:
@@ -92,11 +97,6 @@ func shoot() -> void:
 
 	get_parent().add_child(projectile)
 
-
-# --------------------------------------------------------------------------
-# LÓGICA DE INPUT, SELECCIÓN Y MISIÓN
-# --------------------------------------------------------------------------
-
 func _input(event):
 	if event.is_action_pressed("Pause"):
 		toggle_pause()
@@ -107,7 +107,6 @@ func _input(event):
 	if Input.is_action_just_pressed("change_product"):
 		change_product_selection()
 
-
 func change_product_selection() -> void:
 	var total_products = products.size()
 	if total_products == 0:
@@ -116,7 +115,6 @@ func change_product_selection() -> void:
 	current_product_index = (current_product_index + 1) % total_products
 	selected_product_name = products[current_product_index]
 	print("Producto seleccionado: ", selected_product_name)
-
 
 func generate_new_delivery_goal() -> void:
 	objetivos_entrega.clear()
@@ -129,13 +127,11 @@ func generate_new_delivery_goal() -> void:
 		print("Entregar %d de %s" % [objetivos_entrega[product], product])
 	print("------------------------------------------")
 
-
 func track_delivery_progress(product_name: String, amount: int = 1) -> void:
 	if product_name in objetivos_entrega:
 		objetivos_entrega[product_name] = max(0, objetivos_entrega[product_name] - amount)
 		print("Entregado %d de %s. Quedan %d." % [amount, product_name, objetivos_entrega[product_name]])
 		check_for_mission_completion()
-
 
 func check_for_mission_completion() -> void:
 	var all_goals_met = true
@@ -151,24 +147,17 @@ func check_for_mission_completion() -> void:
 		get_tree().root.add_child(victory_instance)
 		get_tree().paused = true
 
-
-# --------------------------------------------------------------------------
-# OTRAS FUNCIONES
-# --------------------------------------------------------------------------
-
 func take_damage(amount: int):
 	Hearts -= amount
 	if Hearts <= 0:
 		Hearts = 0
 		game_over()
 
-
 func game_over():
 	get_tree().paused = true
 	var game_over_scene = preload("res://Escenas/game_over.tscn")
 	var game_over_instance = game_over_scene.instantiate()
 	get_tree().root.add_child(game_over_instance)
-
 
 func slow_down(amount: float, duration: float):
 	speed = max(speed - amount, 0)
@@ -177,7 +166,6 @@ func slow_down(amount: float, duration: float):
 	speed = normal_speed
 	print("Velocidad restaurada")
 
-
 func toggle_pause():
 	var should_pause = !get_tree().paused
 	get_tree().paused = should_pause
@@ -185,16 +173,10 @@ func toggle_pause():
 	if pause_screen:
 		pause_screen.visible = should_pause
 
-	# 👇 Mostrar u ocultar el cursor del sistema al pausar
 	if should_pause:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-
-
-# --------------------------------------------------------------------------
-# 💠 Cursor personalizado (se actualiza cada frame)
-# --------------------------------------------------------------------------
 
 func _process(_delta: float) -> void:
 	var crosshair = get_node_or_null("crosshair")
