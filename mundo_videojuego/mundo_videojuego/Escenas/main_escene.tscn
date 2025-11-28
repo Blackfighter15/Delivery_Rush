@@ -104,8 +104,8 @@ position = Vector2(440, -87)
 position = Vector2(488, -87)
 
 [node name="Player" parent="." instance=ExtResource("3_cfbmd")]
-position = Vector2(-1, 240)
-scale = Vector2(0.11580979, 0.11629165)
+position = Vector2(-1, 235)
+scale = Vector2(1.2308911, 0.93340594)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(273, 226)

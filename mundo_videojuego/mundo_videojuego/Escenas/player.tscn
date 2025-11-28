@@ -2,21 +2,21 @@
 
 [ext_resource type="Script" uid="uid://coonmjxm1nydd" path="res://Scripts/player.gd" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://c0oyu6i7mc77h" path="res://Escenas/projectil_player.tscn" id="2_i3pqv"]
-[ext_resource type="Texture2D" uid="uid://bc0ds80ngfpal" path="res://icon.svg" id="2_onrkg"]
+[ext_resource type="Texture2D" uid="uid://wwcadlglhw5i" path="res://Assets/Diseno de motos.png" id="3_qgqwx"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i3pqv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_onrkg")
+"texture": ExtResource("3_qgqwx")
 }],
 "loop": true,
-"name": &"default",
+"name": &"new_animation",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
-size = Vector2(121, 121)
+size = Vector2(22, 30.75)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_4flbx")
@@ -24,7 +24,8 @@ projectile_scene = ExtResource("2_i3pqv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_i3pqv")
+animation = &"new_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, -0.5)
+position = Vector2(1, -0.625)
 shape = SubResource("RectangleShape2D_hqtel")

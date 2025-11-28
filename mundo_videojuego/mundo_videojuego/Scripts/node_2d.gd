@@ -19,6 +19,7 @@ var spawn_timer: float = 0.0
 var personas_por_bloque = {}
 
 func _ready():
+	Global.load_game()
 	tiempo_restante = tiempo_limite
 	spawn_timer = tiempo_spawn
 	

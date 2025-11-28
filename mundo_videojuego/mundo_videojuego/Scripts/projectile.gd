@@ -14,5 +14,4 @@ func _on_body_entered(body):
 		print("💥 Impacto en el jugador")
 		body.take_damage(1)
 		body.slow_down(100, 3)
-		print(body.Hearts)
 		queue_free()
