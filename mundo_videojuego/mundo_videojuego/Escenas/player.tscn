@@ -23,6 +23,7 @@ script = ExtResource("1_4flbx")
 projectile_scene = ExtResource("2_i3pqv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_i3pqv")
 animation = &"new_animation"
 

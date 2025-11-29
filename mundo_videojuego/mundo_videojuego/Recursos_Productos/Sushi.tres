@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ProductosDatos" load_steps=3 format=3 uid="uid://dhix5s4io8fna"]
+
+[ext_resource type="Script" uid="uid://12jy1l6w4cgf" path="res://Scripts/Producto_datos.gd" id="1_7as6t"]
+[ext_resource type="Texture2D" uid="uid://cnm2j76rg06ae" path="res://Assets/sushi.png" id="2_28v2w"]
+
+[resource]
+script = ExtResource("1_7as6t")
+tipo_comida = "sushi"
+textura_sprite = ExtResource("2_28v2w")

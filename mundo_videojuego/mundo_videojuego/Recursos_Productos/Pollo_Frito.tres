@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ProductosDatos" load_steps=3 format=3 uid="uid://xqvsiwd8fh30"]
+
+[ext_resource type="Script" uid="uid://12jy1l6w4cgf" path="res://Scripts/Producto_datos.gd" id="1_qb3y6"]
+[ext_resource type="Texture2D" uid="uid://ctuk0ykbiy82h" path="res://Assets/pollo_kfc _intento2.png" id="2_hxyso"]
+
+[resource]
+script = ExtResource("1_qb3y6")
+tipo_comida = "Pollo_frito"
+textura_sprite = ExtResource("2_hxyso")

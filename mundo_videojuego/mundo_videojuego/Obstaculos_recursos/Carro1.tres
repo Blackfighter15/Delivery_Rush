@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Obstaculosdatos" load_steps=4 format=3 uid="uid://bmlcj53ulx32c"]
+
+[ext_resource type="Script" uid="uid://cvqn1wchkk5i0" path="res://Scripts/Obstaculo_datos.gd" id="1_nhyf5"]
+[ext_resource type="Texture2D" uid="uid://pkwtw2eq4ucf" path="res://Assets/carros.png" id="2_33iss"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5c5mh"]
+atlas = ExtResource("2_33iss")
+region = Rect2(74.75173, 0.8168917, 40.985916, 23.894424)
+
+[resource]
+script = ExtResource("1_nhyf5")
+textura_sprite = SubResource("AtlasTexture_5c5mh")
