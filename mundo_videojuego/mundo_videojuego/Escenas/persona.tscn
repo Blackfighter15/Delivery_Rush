@@ -7,7 +7,7 @@
 size = Vector2(121, 124)
 
 [node name="cliente" type="StaticBody2D" groups=["objetivo"]]
-scale = Vector2(0.426, 0.4)
+scale = Vector2(0.8423837, 0.6472452)
 script = ExtResource("1_dgi50")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

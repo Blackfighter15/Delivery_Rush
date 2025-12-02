@@ -3,6 +3,9 @@ extends CharacterBody2D
 # ---------------- VARIABLES ----------------
 var pause_screen: Control
 var objetivos_entrega: Dictionary = {}  # Misiones actuales
+var character_width = 16.0
+var slow_timer: Timer = null
+var is_slowed: bool = false
 
 @export var projectile_scene: PackedScene
 @export var shoot_force: float = 700.0
@@ -29,7 +32,9 @@ func _ready():
 		Global.game_data.selected_product_name = Global.products[index].tipo_comida
 
 	generate_new_delivery_goal()
-
+	
+	# Usamos call_deferred para esperar un frame a que el HUD esté listo en el árbol
+	call_deferred("update_hud_goals")
 	# ---------------- CURSOR PERSONALIZADO ----------------
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	var crosshair = Sprite2D.new()
@@ -59,7 +64,21 @@ func _physics_process(_delta: float) -> void:
 	velocity.x = input.x * Global.game_data.speed
 	move_and_slide()
 
-	# Cambio de carril
+	# --- INICIO: RESTRICCIÓN DE PANTALLA (EJE X) ---
+	
+	# 1. Obtener el ancho de la Viewport
+	var viewport_width = get_viewport_rect().size.x
+	
+	# 2. Definir los límites ajustados (para que el personaje se mantenga visible)
+	var left_limit = character_width / 2.0  # El borde izquierdo del personaje toca el 0
+	var right_limit = 540 # El borde derecho toca el final
+	
+	# 3. Aplicar la función clamp a la posición X del personaje
+	position.x = clamp(position.x, left_limit, right_limit)
+	
+	# --- FIN: RESTRICCIÓN DE PANTALLA (EJE X) ---
+
+	# Cambio de carril (Movimiento Y)
 	if Input.is_action_just_pressed("Arriba") and current_lane > 0:
 		current_lane -= 1
 	elif Input.is_action_just_pressed("Abajo") and current_lane < lanes.size() - 1:
@@ -74,7 +93,6 @@ func _physics_process(_delta: float) -> void:
 		can_shoot = false
 		await get_tree().create_timer(shoot_delay).timeout
 		can_shoot = true
-
 # ---------------- DISPARO ----------------
 func shoot() -> void:
 	if projectile_scene == null or Global.products.size() == 0:
@@ -114,18 +132,27 @@ func change_product_selection() -> void:
 		return
 
 	var index = Global.game_data.current_product_index
+	# Calcular el nuevo índice
 	index = (Global.game_data.current_product_index + 1) % Global.products.size()
 	Global.set_current_product_index(index)
-
 
 	# Actualiza nombre solo para UI
 	Global.game_data.selected_product_name = Global.products[index].tipo_comida
 	print("Producto seleccionado: ", Global.game_data.selected_product_name)
 
 	Global.save_game()
-	var hud = get_tree().get_root().get_node("Hud")  # Asumiendo que la instancia se llama HUD en la escena
-	if hud:
-		hud.UpdateSelectedProduct()
+	
+	# --- INTEGRACIÓN HUD ---
+	# Buscamos el HUD de forma segura
+	var hud = get_tree().get_root().find_child("HUD", true, false)
+	
+	if hud and hud.has_method("UpdateSelectedProductByIndex"):
+		# CORRECCIÓN: Llamamos a la función correcta que definiste en el HUD script
+		hud.UpdateSelectedProductByIndex(index)
+	else:
+		print("Error: No se encontró el HUD o la función UpdateSelectedProductByIndex")
+	
+
 
 # ---------------- MISIÓN ----------------
 func generate_new_delivery_goal() -> void:
@@ -141,15 +168,29 @@ func generate_new_delivery_goal() -> void:
 	for p in objetivos_entrega.keys():
 		print("Entregar %d de %s" % [objetivos_entrega[p], p])
 	print("------------------------------------------")
-
+	# ⚠️ NO LLAMAMOS AL HUD AQUÍ, lo llamamos en _ready para que el flujo sea más limpio
+	#    o desde el gestor de misiones si es una función de reinicio.
 func track_delivery_progress(product_name: String, amount: int = 1) -> void:
 	if product_name in objetivos_entrega:
 		objetivos_entrega[product_name] = max(0, objetivos_entrega[product_name] - amount)
 		print("Entregado %d de %s. Quedan %d." % [amount, product_name, objetivos_entrega[product_name]])
+		
+		# ⚠️ LLAMADA CLAVE: Actualiza el HUD inmediatamente después de la resta
+		update_hud_goals() 
+
 		check_for_mission_completion()
 		Global.set_money(Global.game_data["Money"] + (amount * 10))
 		Global.save_game()
 
+func update_hud_goals():
+	var hud_node = get_tree().current_scene.get_node_or_null("HUD")
+
+	if hud_node and hud_node.has_method("update_delivery_goals"):
+		hud_node.update_delivery_goals(objetivos_entrega, Global.products)
+	else:
+		print("ADVERTENCIA: No se encontró el HUD o falta la función update_delivery_goals.")
+
+		
 func check_for_mission_completion() -> void:
 	var all_done = true
 	for v in objetivos_entrega.values():
@@ -178,12 +219,29 @@ func game_over():
 	get_tree().root.add_child(go_scene)
 
 func slow_down(amount: float, duration: float):
-	var normal = Global.game_data.speed
-	Global.game_data.speed = max(normal - amount, 0)
-	print("Jugador ralentizado")
-	await get_tree().create_timer(duration).timeout
-	Global.game_data.speed = normal
-	print("Velocidad restaurada")
+	# ✅ USAMOS SIEMPRE LA BASE REAL
+	var base_speed = Global.game_data["Base_Speed"]
+
+	# Si no está ralentizado, aplicar slow
+	if not is_slowed:
+		Global.game_data["speed"] = max(base_speed - amount, 0)
+		is_slowed = true
+		print("Jugador ralentizado a: ", Global.game_data["speed"])
+
+	# Crear timer si no existe
+	if slow_timer == null:
+		slow_timer = Timer.new()
+		add_child(slow_timer)
+		slow_timer.one_shot = true
+		slow_timer.timeout.connect(func():
+			Global.game_data["speed"] = base_speed
+			is_slowed = false
+			print("Velocidad restaurada a: ", base_speed)
+		)
+
+	# Siempre reiniciar el tiempo
+	slow_timer.stop()
+	slow_timer.start(duration)
 
 # ---------------- PAUSA ----------------
 func toggle_pause():

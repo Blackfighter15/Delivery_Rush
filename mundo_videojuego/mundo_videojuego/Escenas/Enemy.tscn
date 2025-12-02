@@ -1,21 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://bp8l61rx7n38s"]
+[gd_scene load_steps=6 format=3 uid="uid://bp8l61rx7n38s"]
 
 [ext_resource type="Script" uid="uid://cgpqbxwnuolcv" path="res://Scripts/enemy.gd" id="1_s7bn3"]
-[ext_resource type="Texture2D" uid="uid://bc0ds80ngfpal" path="res://icon.svg" id="1_tt7e2"]
 [ext_resource type="PackedScene" uid="uid://dsj2elka7wumm" path="res://Escenas/projectile.tscn" id="2_2hac7"]
+[ext_resource type="Texture2D" uid="uid://pkwtw2eq4ucf" path="res://Assets/carros.png" id="3_cxmtl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0tg02"]
+atlas = ExtResource("3_cxmtl")
+region = Rect2(1.7040434, 20.924484, 47.67353, 18.306637)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s7bn3"]
-size = Vector2(118, 118)
+size = Vector2(138.22217, 55.926826)
 
 [node name="Area2D" type="Area2D"]
-scale = Vector2(0.13745986, 0.14304407)
+scale = Vector2(0.3151853, 0.30121908)
 script = ExtResource("1_s7bn3")
 projectile_scene = ExtResource("2_2hac7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_tt7e2")
+texture_filter = 1
+scale = Vector2(3.5443578, 4.0461144)
+texture = SubResource("AtlasTexture_0tg02")
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.6374242, 6.9908514)
+scale = Vector2(1, 0.9999999)
 shape = SubResource("RectangleShape2D_s7bn3")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

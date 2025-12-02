@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://knnf8qipor43"]
+[gd_scene load_steps=20 format=3 uid="uid://knnf8qipor43"]
 
 [ext_resource type="Script" uid="uid://bmvx3lho1ufys" path="res://Scripts/node_2d.gd" id="1_oeqkc"]
 [ext_resource type="PackedScene" uid="uid://bkeuptpxkaj6u" path="res://Escenas/persona.tscn" id="2_cfbmd"]
@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://cq3in32itnvji" path="res://Escenas/Obstaculo.tscn" id="5_qv8fg"]
 [ext_resource type="PackedScene" uid="uid://bp8l61rx7n38s" path="res://Escenas/Enemy.tscn" id="6_6h6nb"]
 [ext_resource type="Resource" uid="uid://cb5ab5es42o7l" path="res://Recursos_Clientes/Cliente_Hamburguesa.tres" id="6_kddt6"]
+[ext_resource type="Resource" uid="uid://csb7rkx85iqua" path="res://Recursos_Clientes/Cliente_Comida_China.tres" id="6_qocxe"]
+[ext_resource type="Resource" uid="uid://bkv02kl682g6k" path="res://Recursos_Clientes/Cliente_Sushi.tres" id="7_lt0dm"]
+[ext_resource type="Resource" uid="uid://die27sr2awpy1" path="res://Recursos_Clientes/Cliente_Pollo_Frito.tres" id="8_0q7oy"]
 [ext_resource type="PackedScene" uid="uid://wcuve4sicr57" path="res://HUD/HUD.tscn" id="11_6h6nb"]
 [ext_resource type="Script" uid="uid://cvqn1wchkk5i0" path="res://Scripts/Obstaculo_datos.gd" id="11_m34og"]
 [ext_resource type="Resource" uid="uid://bmlcj53ulx32c" path="res://Obstaculos_recursos/Carro1.tres" id="12_clsu8"]
@@ -23,7 +26,7 @@ position = Vector2(1, -3)
 [node name="Node2D" type="Node2D" parent="." groups=["nivel"]]
 script = ExtResource("1_oeqkc")
 persona_scene = ExtResource("2_cfbmd")
-tipos_clientes = Array[ExtResource("3_m34og")]([ExtResource("4_clsu8"), ExtResource("6_kddt6")])
+tipos_clientes = Array[ExtResource("3_m34og")]([ExtResource("4_clsu8"), ExtResource("6_kddt6"), ExtResource("6_qocxe"), ExtResource("7_lt0dm"), ExtResource("8_0q7oy")])
 
 [node name="Primer Nivel" parent="Node2D" instance=ExtResource("2_mgxx7")]
 position = Vector2(388, 228)
@@ -113,8 +116,9 @@ position = Vector2(488, -87)
 position = Vector2(-5, 228)
 scale = Vector2(1.1492411, 0.7086445)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." groups=["MainCamera"]]
 position = Vector2(273, 226)
+scale = Vector2(0.02927569, 0.88673156)
 zoom = Vector2(2, 2)
 
 [node name="Spawner obst" type="Node2D" parent="."]
@@ -123,7 +127,7 @@ obstacle_scene = ExtResource("5_qv8fg")
 enemy_scene = ExtResource("6_6h6nb")
 obstacle_resources = Array[ExtResource("11_m34og")]([ExtResource("12_clsu8"), ExtResource("13_kddt6"), ExtResource("14_co7ik"), ExtResource("15_m4no8")])
 
-[node name="Hud" parent="." instance=ExtResource("11_6h6nb")]
+[node name="HUD" parent="." instance=ExtResource("11_6h6nb")]
 offset_left = -13.000001
 offset_top = 82.0
 offset_right = -13.000001

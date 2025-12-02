@@ -19,7 +19,7 @@ font_size = 30
 atlas = ExtResource("2_b7ubu")
 region = Rect2(13.804024, 63.808125, 27.715591, 35.3458)
 
-[node name="Hud" type="Control"]
+[node name="HUD" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -97,3 +97,19 @@ texture_filter = 1
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 texture = SubResource("AtlasTexture_amwvk")
+
+[node name="GoalsContainer" type="HBoxContainer" parent="."]
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 485.0
+offset_top = 610.0
+offset_right = 485.0
+offset_bottom = 610.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.3619108, 1.8698606)

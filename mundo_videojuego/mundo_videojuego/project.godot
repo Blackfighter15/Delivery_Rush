@@ -33,6 +33,7 @@ enabled=PackedStringArray("res://addons/ridiculous_coding/plugin.cfg")
 player=""
 objetivo=""
 nivel=""
+MainCamera=""
 
 [input]
 

@@ -1,10 +1,14 @@
-[gd_resource type="Resource" script_class="ClienteDatos" load_steps=3 format=3 uid="uid://csb7rkx85iqua"]
+[gd_resource type="Resource" script_class="ClienteDatos" load_steps=4 format=3 uid="uid://csb7rkx85iqua"]
 
 [ext_resource type="Script" uid="uid://tfma6rkhnrn0" path="res://Scripts/ClienteDatos.gd" id="1_qi1lp"]
-[ext_resource type="Texture2D" uid="uid://6wkquvntcc56" path="res://Assets/Pixel Aventure/Free/Background/Gray.png" id="2_d8c0u"]
+[ext_resource type="Texture2D" uid="uid://dugqpkn2n7vby" path="res://Assets/Personaje 2.png" id="2_d8c0u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62iy8"]
+atlas = ExtResource("2_d8c0u")
+region = Rect2(0, 0, 64, 35.79022)
 
 [resource]
 script = ExtResource("1_qi1lp")
 tipo_comida = "comida_china"
-textura_sprite = ExtResource("2_d8c0u")
+textura_sprite = SubResource("AtlasTexture_62iy8")
 metadata/_custom_type_script = "uid://tfma6rkhnrn0"
