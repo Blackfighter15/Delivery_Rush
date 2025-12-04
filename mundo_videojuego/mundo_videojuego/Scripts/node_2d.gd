@@ -1,11 +1,9 @@
 extends Node2D
 
 @export var total_entregas: int = 10
-@export var tiempo_limite: float = 90.0  # segundos
-@export var tiempo_spawn: float = 3.0    # cada cuánto se genera una nueva persona
+@export var tiempo_spawn: float = 0.5    # cada cuánto se genera una nueva persona
 
 var entregas_realizadas: int = 0
-var tiempo_restante: float
 var spawn_timer: float = 0.0
 
 
@@ -20,7 +18,6 @@ var personas_por_bloque = {}
 
 func _ready():
 	Global.load_game()
-	tiempo_restante = tiempo_limite
 	spawn_timer = tiempo_spawn
 	
 	for block in blocks:
@@ -45,9 +42,6 @@ func _process(delta):
 			limpiar_personas_del_bloque(block)
 
  # 🕓 Control del tiempo
-	tiempo_restante -= delta
-	if tiempo_restante <= 0:
-		game_over()
 	
 	# 👥 Generar personas con intervalo
 	spawn_timer -= delta
@@ -63,17 +57,42 @@ func game_over():
 	get_tree().root.add_child(game_over_instance)
 	
 func generar_persona_aleatoria():
-	# Elegir un bloque al azar
+	# 1. Elegir un bloque al azar
 	var block = blocks[randi() % blocks.size()]
-	var spawn_points = block.find_children("*", "Marker2D", true)
-	if spawn_points.is_empty():
-		return
 	
-	var spawn_point = spawn_points[randi() % spawn_points.size()]
+	# 2. Obtener todos los markers
+	var all_spawn_points = block.find_children("*", "Marker2D", true)
+	if all_spawn_points.is_empty():
+		return
+
+	# 3. Filtrar: Crear una lista SOLO con los markers que no están ocupados
+	var spawn_points_libres = []
+	for point in all_spawn_points:
+		# Verificamos si tiene la meta "ocupado". Si no la tiene o es false, sirve.
+		if not point.has_meta("ocupado") or point.get_meta("ocupado") == false:
+			spawn_points_libres.append(point)
+
+	# Si después de filtrar no queda ninguno libre, salimos de la función
+	if spawn_points_libres.is_empty():
+		return 
+	
+	# 4. Elegir uno de los markers LIBRES
+	var spawn_point = spawn_points_libres[randi() % spawn_points_libres.size()]
+	
+	# 5. MARCAR COMO OCUPADO (Muy importante)
+	spawn_point.set_meta("ocupado", true)
+
+	# Instanciar la persona
 	var persona = persona_scene.instantiate()
 	asignar_tipo_cliente(persona)
 	add_child(persona)
 	persona.position = spawn_point.global_position
+	
+	# === PASO EXTRA IMPORTANTE ===
+	# Necesitas decirle a la persona cuál es su marker para liberarlo cuando se vaya/muera.
+	# Asegúrate de que tu script de 'persona' tenga una variable 'my_spawn_marker'.
+	if "current_marker" in persona:
+		persona.current_marker = spawn_point
 	
 	if block not in personas_por_bloque:
 		personas_por_bloque[block] = []
@@ -83,18 +102,30 @@ func asignar_tipo_cliente(persona_instancia):
 	if tipos_clientes.is_empty():
 		return
 
-	# 1. Selecciona un recurso de datos al azar
-	var datos_aleatorios = tipos_clientes.pick_random()
+	# 1. FILTRADO INTELIGENTE
+	# Creamos una lista temporal solo con los tipos que Global dice que necesitamos
+	var clientes_necesarios = []
+	
+	for datos in tipos_clientes:
+		# Preguntamos al Global: "¿Necesitamos entregar esto?"
+		if Global.es_cliente_necesario(datos.tipo_comida):
+			clientes_necesarios.append(datos)
+	
+	# 2. DECISIÓN
+	# Si la lista está vacía, significa que todos los objetivos de ese tipo se cumplieron
+	if clientes_necesarios.is_empty():
+		print("✅ No se necesitan más clientes por ahora.")
+		persona_instancia.queue_free() # Borramos la instancia para no tener "fantasmas"
+		return
 
-	# 2. Obtiene la instancia del cliente *como* la clase Cliente
-	#    Esto garantiza que Godot reconozca y pueda acceder a la variable 'datos_cliente'
-	#    que está definida en el script Cliente.gd (extends StaticBody2D).
-	var cliente = persona_instancia as Cliente 
+	# 3. SELECCIÓN
+	# Elegimos al azar, pero SOLO de la lista de necesarios
+	var datos_aleatorios = clientes_necesarios.pick_random()
 
+	var cliente = persona_instancia as Cliente
 	if is_instance_valid(cliente) and datos_aleatorios != null:
-		# Asigna el recurso a la propiedad del script 'Cliente'
 		cliente.datos_cliente = datos_aleatorios
-		print("👤 Nuevo cliente generado. Tipo: ", datos_aleatorios.tipo_comida)
+		print("👤 Generado cliente de: ", datos_aleatorios.tipo_comida)
 	
 func registrar_entrega():
 	entregas_realizadas += 1

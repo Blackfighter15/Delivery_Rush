@@ -23,16 +23,36 @@ var game_data : Dictionary = {
 	"current_product_index": 0,
 	"selected_product_name": "Pizza",
 	"MIN_AMOUNT": 1,
-	"MAX_AMOUNT": 1,
+	"MAX_AMOUNT": 5,
 	"speed": 200.0,
 	"Base_Speed": 200.0,
 	"Hearts": 3,
 	"Max_Hearts": 3,
-	"Money": 0
+	"Money": 0,
+	"Level":1
+}
+
+var LEVEL_CONFIG = {
+	1: { 
+		"spawn_interval": 2.5, 
+		"speed_bonus": 0.0, 
+		"enemy_chance": 0.2  # 20% probabilidad de enemigo
+	},
+	2: { 
+		"spawn_interval": 2.5, 
+		"speed_bonus": 500.0, 
+		"enemy_chance": 0.3 
+	},
+	3: { 
+		"spawn_interval": 1, 
+		"speed_bonus": 200.0, 
+		"enemy_chance": 0.7
+		}
 }
 
 # 🔹 Productos cargados en memoria
 var products: Array = []
+var objetivos_activos: Dictionary = {}
 
 func _ready():
 	load_products()
@@ -92,3 +112,44 @@ func set_current_product_index(new_index: int) -> void:
 	producto_cambiado.emit(new_index)
 
 	save_game()
+	
+func reiniciar_datos_sesion():
+	# Limpiamos los objetivos para que no se mezclen con la partida anterior
+	objetivos_activos.clear()
+	
+	# Reseteamos vidas y velocidad a sus valores base
+	reset_hearts()
+	reset_speed()
+	print("🧹 Datos de sesión limpiados correctamente.")
+	
+# 1. El Player llama a esto cuando decide la misión
+func actualizar_objetivos(nuevos_objetivos: Dictionary):
+	objetivos_activos = nuevos_objetivos.duplicate()
+	print("📡 Global actualizado con objetivos: ", objetivos_activos)
+
+# 2. El Nivel llama a esto para saber si DEBE generar un cliente
+func es_cliente_necesario(tipo_comida: String) -> bool:
+	if objetivos_activos.has(tipo_comida):
+		return objetivos_activos[tipo_comida] > 0
+	return false
+
+# 3. El Player llama a esto cuando entrega algo con éxito
+func descontar_objetivo(tipo_comida: String):
+	if objetivos_activos.has(tipo_comida):
+		objetivos_activos[tipo_comida] -= 1
+		# Evitamos números negativos
+		if objetivos_activos[tipo_comida] < 0:
+			objetivos_activos[tipo_comida] = 0
+		print("📉 Restante en Global para ", tipo_comida, ": ", objetivos_activos[tipo_comida])
+
+func get_current_level_config() -> Dictionary:
+	var current_lvl = 1
+	
+	# Si el nivel existe en el diccionario, lo devolvemos
+	if LEVEL_CONFIG.has(current_lvl):
+		return LEVEL_CONFIG[current_lvl]
+	
+	# Si el jugador superó el nivel máximo definido (ej: va por nivel 20 y solo definiste 5),
+	# devolvemos la configuración del nivel más alto que tengas.
+	var max_defined_level = LEVEL_CONFIG.keys().max()
+	return LEVEL_CONFIG[max_defined_level]

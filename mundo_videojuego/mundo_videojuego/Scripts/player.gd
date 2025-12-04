@@ -18,6 +18,7 @@ var can_shoot: bool = true
 func _ready():
 	# 🔹 Cargar datos del Global
 	Global.load_game()
+	Global.reiniciar_datos_sesion()
 	Global.reset_hearts()
 	Global.reset_speed()
 	
@@ -154,7 +155,8 @@ func generate_new_delivery_goal() -> void:
 	for product in Global.products:
 		var amount = randi_range(MIN_AMOUNT, MAX_AMOUNT)
 		objetivos_entrega[product.tipo_comida] = amount
-
+		
+	Global.actualizar_objetivos(objetivos_entrega)
 	print("--- Nuevo Objetivo generado ---")
 	for p in objetivos_entrega.keys():
 		print("Entregar %d de %s" % [objetivos_entrega[p], p])
@@ -163,7 +165,7 @@ func track_delivery_progress(product_name: String, amount: int = 1) -> void:
 	if product_name in objetivos_entrega:
 		objetivos_entrega[product_name] = max(0, objetivos_entrega[product_name] - amount)
 		print("Entregado %d de %s. Quedan %d." % [amount, product_name, objetivos_entrega[product_name]])
-
+		Global.descontar_objetivo(product_name)
 		update_hud_goals()
 		check_for_mission_completion()
 

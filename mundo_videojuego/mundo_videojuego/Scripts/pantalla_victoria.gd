@@ -6,7 +6,7 @@ extends Control
 func _ready():
 	# Configurar este nodo para que funcione aunque el árbol esté pausado
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	# También configurar los botones por si acaso
 	boton_reintentar.process_mode = Node.PROCESS_MODE_ALWAYS
 	boton_regresar.process_mode = Node.PROCESS_MODE_ALWAYS

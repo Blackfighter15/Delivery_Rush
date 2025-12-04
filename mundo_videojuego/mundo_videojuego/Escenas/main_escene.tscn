@@ -30,13 +30,10 @@ persona_scene = ExtResource("2_cfbmd")
 tipos_clientes = Array[ExtResource("3_m34og")]([ExtResource("4_clsu8"), ExtResource("6_kddt6"), ExtResource("6_qocxe"), ExtResource("7_lt0dm"), ExtResource("8_0q7oy")])
 
 [node name="Primer Nivel" parent="Node2D" instance=ExtResource("2_mgxx7")]
-position = Vector2(388, 228)
-
-[node name="Marker2D" type="Marker2D" parent="Node2D/Primer Nivel"]
-position = Vector2(-536, -71)
+position = Vector2(398, 228)
 
 [node name="Marker2D2" type="Marker2D" parent="Node2D/Primer Nivel"]
-position = Vector2(-362, -170)
+position = Vector2(-360, -88)
 
 [node name="Marker2D3" type="Marker2D" parent="Node2D/Primer Nivel"]
 position = Vector2(-248, -119)
@@ -60,10 +57,10 @@ position = Vector2(8, -120)
 position = Vector2(56, -120)
 
 [node name="Marker2D10" type="Marker2D" parent="Node2D/Primer Nivel"]
-position = Vector2(232, -136)
+position = Vector2(228, -115)
 
 [node name="Marker2D11" type="Marker2D" parent="Node2D/Primer Nivel"]
-position = Vector2(248, -136)
+position = Vector2(252, -136)
 
 [node name="Marker2D12" type="Marker2D" parent="Node2D/Primer Nivel"]
 position = Vector2(440, -87)
@@ -71,14 +68,26 @@ position = Vector2(440, -87)
 [node name="Marker2D13" type="Marker2D" parent="Node2D/Primer Nivel"]
 position = Vector2(488, -87)
 
+[node name="Marker2D15" type="Marker2D" parent="Node2D/Primer Nivel"]
+position = Vector2(-440, -75)
+
+[node name="Marker2D16" type="Marker2D" parent="Node2D/Primer Nivel"]
+position = Vector2(24, -71)
+
+[node name="Marker2D17" type="Marker2D" parent="Node2D/Primer Nivel"]
+position = Vector2(136, -88)
+
+[node name="Marker2D18" type="Marker2D" parent="Node2D/Primer Nivel"]
+position = Vector2(601, -100)
+
 [node name="Primer Nivel2" parent="Node2D" instance=ExtResource("2_mgxx7")]
 position = Vector2(2689, 228)
 
 [node name="Marker2D" type="Marker2D" parent="Node2D/Primer Nivel2"]
-position = Vector2(-536, -71)
+position = Vector2(-376, -54)
 
 [node name="Marker2D2" type="Marker2D" parent="Node2D/Primer Nivel2"]
-position = Vector2(-362, -170)
+position = Vector2(-426, -55)
 
 [node name="Marker2D3" type="Marker2D" parent="Node2D/Primer Nivel2"]
 position = Vector2(-248, -119)
@@ -112,6 +121,12 @@ position = Vector2(440, -87)
 
 [node name="Marker2D13" type="Marker2D" parent="Node2D/Primer Nivel2"]
 position = Vector2(488, -87)
+
+[node name="Marker2D14" type="Marker2D" parent="Node2D/Primer Nivel2"]
+position = Vector2(-536, -71)
+
+[node name="Marker2D15" type="Marker2D" parent="Node2D/Primer Nivel2"]
+position = Vector2(-584, -73)
 
 [node name="Player" parent="." instance=ExtResource("3_cfbmd")]
 position = Vector2(-5, 228)
