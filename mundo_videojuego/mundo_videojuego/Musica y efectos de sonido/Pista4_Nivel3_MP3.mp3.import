@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://mswxn2joqxr2"
+path="res://.godot/imported/Pista4_Nivel3_MP3.mp3-c1a792696e9f890e6d26375d2074132c.mp3str"
+
+[deps]
+
+source_file="res://Musica y efectos de sonido/Pista4_Nivel3_MP3.mp3"
+dest_files=["res://.godot/imported/Pista4_Nivel3_MP3.mp3-c1a792696e9f890e6d26375d2074132c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

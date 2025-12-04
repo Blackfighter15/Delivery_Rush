@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://37htuga4saay"]
+[gd_scene load_steps=11 format=3 uid="uid://37htuga4saay"]
 
 [ext_resource type="Script" uid="uid://y387lwnamoo1" path="res://Scripts/menu_inicio.gd" id="1_bh4mo"]
 [ext_resource type="Texture2D" uid="uid://brxqi1eca63li" path="res://Assets/BackGroundInicio.png" id="1_bj24b"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b507nbkw7w610" path="res://Assets/kenney_ui-pack/PNG/Red/Default/button_round_depth_flat.png" id="4_fkb7y"]
 [ext_resource type="Texture2D" uid="uid://dolmj0tiuxtdf" path="res://Assets/kenney_ui-pack/PNG/Red/Default/button_round_depth_gradient.png" id="5_bh4mo"]
 [ext_resource type="Texture2D" uid="uid://b75towpvy0607" path="res://Assets/kenney_ui-pack/PNG/arrow_basic_e.png" id="6_fkb7y"]
+[ext_resource type="AudioStream" uid="uid://bqo8qw403jfel" path="res://Musica y efectos de sonido/Pista3_Menu_MP3.mp3" id="8_e2ud0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bj24b"]
 font = ExtResource("3_iy1r8")
@@ -81,5 +82,9 @@ texture_pressed = ExtResource("5_bh4mo")
 position = Vector2(575.00006, 541)
 scale = Vector2(2.59375, 2.46875)
 texture = ExtResource("6_fkb7y")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_e2ud0")
+autoplay = true
 
 [connection signal="pressed" from="TextureButton" to="TextureButton" method="_on_pressed"]

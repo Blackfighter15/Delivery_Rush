@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://df5buje0g7rxg"
+path="res://.godot/imported/lanzar comida.mp3-27440933955ab05932e679a59d854118.mp3str"
+
+[deps]
+
+source_file="res://Musica y efectos de sonido/efecto desonido/lanzar comida.mp3"
+dest_files=["res://.godot/imported/lanzar comida.mp3-27440933955ab05932e679a59d854118.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

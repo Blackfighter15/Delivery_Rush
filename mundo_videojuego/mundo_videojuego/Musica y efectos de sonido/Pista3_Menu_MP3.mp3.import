@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bqo8qw403jfel"
+path="res://.godot/imported/Pista3_Menu_MP3.mp3-43655941b17caf50323d3f57d7499c72.mp3str"
+
+[deps]
+
+source_file="res://Musica y efectos de sonido/Pista3_Menu_MP3.mp3"
+dest_files=["res://.godot/imported/Pista3_Menu_MP3.mp3-43655941b17caf50323d3f57d7499c72.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

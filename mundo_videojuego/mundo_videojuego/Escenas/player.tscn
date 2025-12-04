@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://h3bdb3rngii5"]
+[gd_scene load_steps=7 format=3 uid="uid://h3bdb3rngii5"]
 
 [ext_resource type="Script" uid="uid://coonmjxm1nydd" path="res://Scripts/player.gd" id="1_4flbx"]
 [ext_resource type="PackedScene" uid="uid://c0oyu6i7mc77h" path="res://Escenas/projectil_player.tscn" id="2_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://wwcadlglhw5i" path="res://Assets/Diseno de motos.png" id="3_qgqwx"]
+[ext_resource type="AudioStream" uid="uid://df5buje0g7rxg" path="res://Musica y efectos de sonido/efecto desonido/lanzar comida.mp3" id="4_6njrx"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i3pqv"]
 animations = [{
@@ -24,9 +25,14 @@ projectile_scene = ExtResource("2_i3pqv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+scale = Vector2(0.87142855, 1)
 sprite_frames = SubResource("SpriteFrames_i3pqv")
 animation = &"new_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -0.625)
 shape = SubResource("RectangleShape2D_hqtel")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_6njrx")
+volume_db = -2.02

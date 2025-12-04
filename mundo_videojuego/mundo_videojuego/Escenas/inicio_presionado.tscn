@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bml0q77tr61fc"]
+[gd_scene load_steps=17 format=3 uid="uid://bml0q77tr61fc"]
 
 [ext_resource type="Texture2D" uid="uid://brxqi1eca63li" path="res://Assets/BackGroundInicio.png" id="1_0obls"]
 [ext_resource type="Script" uid="uid://cdsb1kxetnsnt" path="res://Scripts/inicio_presionado.gd" id="1_vu6lu"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bbpxb66mo43lp" path="res://Assets/kenney_ui-pack/PNG/Red/Default/button_rectangle_depth_gradient.png" id="4_pixam"]
 [ext_resource type="FontFile" uid="uid://cogtpnm5ulrec" path="res://Assets/kenney_ui-pack/Font/Kenney Future.ttf" id="5_pixam"]
 [ext_resource type="FontFile" uid="uid://d16ypl06jv8i5" path="res://Assets/kenney_ui-pack/Font/Kenney Future Narrow.ttf" id="7_0wfaq"]
+[ext_resource type="AudioStream" uid="uid://boxdko87d5qs1" path="res://Musica y efectos de sonido/Pista3_Menu_WAV.wav" id="8_5u2kv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vu6lu"]
 font = ExtResource("5_pixam")
@@ -45,6 +46,7 @@ grow_vertical = 2
 script = ExtResource("1_vu6lu")
 
 [node name="BackGroundInicio" type="Sprite2D" parent="."]
+texture_filter = 1
 position = Vector2(563.99994, 417)
 scale = Vector2(1.8841146, 1.9951172)
 texture = ExtResource("1_0obls")
@@ -55,6 +57,7 @@ scale = Vector2(4.3783703, 2.999898)
 texture = ExtResource("2_untpm")
 
 [node name="botoncomenzar" type="TextureButton" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -72,6 +75,7 @@ texture_normal = ExtResource("3_ipbi0")
 texture_pressed = ExtResource("4_pixam")
 
 [node name="Label" type="Label" parent="botoncomenzar"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 11.0
 offset_top = 15.0
@@ -81,6 +85,7 @@ text = "Comenzar"
 label_settings = SubResource("LabelSettings_vu6lu")
 
 [node name="botonsalir" type="TextureButton" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -97,6 +102,7 @@ texture_normal = ExtResource("3_ipbi0")
 texture_pressed = ExtResource("4_pixam")
 
 [node name="Label" type="Label" parent="botonsalir"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -111,6 +117,7 @@ text = "Salir"
 label_settings = SubResource("LabelSettings_0wfaq")
 
 [node name="botonconfigurar" type="TextureButton" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -128,6 +135,7 @@ texture_normal = ExtResource("3_ipbi0")
 texture_pressed = ExtResource("4_pixam")
 
 [node name="Label" type="Label" parent="botonconfigurar"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 11.0
 offset_top = 17.0
@@ -137,6 +145,7 @@ text = "Configurar"
 label_settings = SubResource("LabelSettings_5u2kv")
 
 [node name="Panel" type="Panel" parent="."]
+texture_filter = 1
 layout_mode = 0
 offset_left = 257.0
 offset_top = 56.0
@@ -144,6 +153,7 @@ offset_right = 916.0
 offset_bottom = 422.0
 
 [node name="Label" type="Label" parent="Panel"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 208.0
 offset_top = 17.0
@@ -154,6 +164,7 @@ text = "Opciones"
 label_settings = SubResource("LabelSettings_37381")
 
 [node name="botonVolver" type="TextureButton" parent="Panel"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -171,6 +182,7 @@ texture_normal = ExtResource("3_ipbi0")
 texture_pressed = ExtResource("4_pixam")
 
 [node name="Label" type="Label" parent="Panel/botonVolver"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 34.034676
 offset_top = 14.7126255
@@ -181,6 +193,7 @@ text = "Volver"
 label_settings = SubResource("LabelSettings_hxg1v")
 
 [node name="botonControles" type="TextureButton" parent="Panel"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -198,6 +211,7 @@ texture_normal = ExtResource("3_ipbi0")
 texture_pressed = ExtResource("4_pixam")
 
 [node name="Label" type="Label" parent="Panel/botonControles"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 8.201126
 offset_top = 17.164719
@@ -208,6 +222,7 @@ text = "Controles"
 label_settings = SubResource("LabelSettings_n7510")
 
 [node name="botonPantalla" type="TextureButton" parent="Panel"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -225,6 +240,7 @@ texture_normal = ExtResource("3_ipbi0")
 texture_pressed = ExtResource("4_pixam")
 
 [node name="PantallCompleta" type="Label" parent="Panel/botonPantalla"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 8.611182
 offset_top = 14.7126255
@@ -234,6 +250,7 @@ text = "Pantalla Completa"
 label_settings = SubResource("LabelSettings_714xj")
 
 [node name="ModoVentana" type="Label" parent="Panel/botonPantalla"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 4.9206753
 offset_top = 20.434202
@@ -242,6 +259,10 @@ offset_bottom = 43.434204
 theme_override_fonts/font = ExtResource("7_0wfaq")
 text = "Modo Ventana"
 label_settings = SubResource("LabelSettings_vjn4g")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_5u2kv")
+autoplay = true
 
 [connection signal="pressed" from="botoncomenzar" to="." method="_on_botoncomenzar_pressed"]
 [connection signal="pressed" from="botonsalir" to="." method="_on_botonsalir_pressed"]

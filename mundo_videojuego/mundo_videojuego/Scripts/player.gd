@@ -12,6 +12,8 @@ var is_slowed: bool = false
 var can_shoot: bool = true
 @export var shoot_delay: float = 0.8
 
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+
 # ---------------- READY ----------------
 func _ready():
 	# 🔹 Cargar datos del Global
@@ -32,9 +34,8 @@ func _ready():
 		Global.game_data.selected_product_name = Global.products[index].tipo_comida
 
 	generate_new_delivery_goal()
-	
-	# Usamos call_deferred para esperar un frame a que el HUD esté listo en el árbol
 	call_deferred("update_hud_goals")
+	
 	# ---------------- CURSOR PERSONALIZADO ----------------
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	var crosshair = Sprite2D.new()
@@ -64,21 +65,13 @@ func _physics_process(_delta: float) -> void:
 	velocity.x = input.x * Global.game_data.speed
 	move_and_slide()
 
-	# --- INICIO: RESTRICCIÓN DE PANTALLA (EJE X) ---
-	
-	# 1. Obtener el ancho de la Viewport
+	# --- RESTRICCIÓN DE PANTALLA (EJE X) ---
 	var viewport_width = get_viewport_rect().size.x
-	
-	# 2. Definir los límites ajustados (para que el personaje se mantenga visible)
-	var left_limit = character_width / 2.0  # El borde izquierdo del personaje toca el 0
-	var right_limit = 540 # El borde derecho toca el final
-	
-	# 3. Aplicar la función clamp a la posición X del personaje
+	var left_limit = character_width / 2.0
+	var right_limit = 540
 	position.x = clamp(position.x, left_limit, right_limit)
-	
-	# --- FIN: RESTRICCIÓN DE PANTALLA (EJE X) ---
 
-	# Cambio de carril (Movimiento Y)
+	# Cambio de carril
 	if Input.is_action_just_pressed("Arriba") and current_lane > 0:
 		current_lane -= 1
 	elif Input.is_action_just_pressed("Abajo") and current_lane < lanes.size() - 1:
@@ -93,23 +86,28 @@ func _physics_process(_delta: float) -> void:
 		can_shoot = false
 		await get_tree().create_timer(shoot_delay).timeout
 		can_shoot = true
+
 # ---------------- DISPARO ----------------
 func shoot() -> void:
 	if projectile_scene == null or Global.products.size() == 0:
 		return
 
+	# 🔊 SONIDO DE DISPARO
+	if audio_stream_player_2d:
+		audio_stream_player_2d.play()
+
 	var projectile = projectile_scene.instantiate()
 	projectile.position = global_position
 
-	# 🔹 Producto actual
+	# Producto actual
 	var index = Global.game_data.current_product_index
-	var projectile_resource = Global.products[index]  # ProductosDatos real
+	var projectile_resource = Global.products[index]
 
-	# Dirección y velocidad
+	# Dirección
 	var dir = (get_global_mouse_position() - global_position).normalized()
 	projectile.velocity = dir * shoot_force
 
-	# 🔹 Asignar recurso completo
+	# Datos para el proyectil
 	projectile.datos_proyectil = projectile_resource
 
 	get_parent().add_child(projectile)
@@ -132,27 +130,20 @@ func change_product_selection() -> void:
 		return
 
 	var index = Global.game_data.current_product_index
-	# Calcular el nuevo índice
 	index = (Global.game_data.current_product_index + 1) % Global.products.size()
 	Global.set_current_product_index(index)
 
-	# Actualiza nombre solo para UI
 	Global.game_data.selected_product_name = Global.products[index].tipo_comida
 	print("Producto seleccionado: ", Global.game_data.selected_product_name)
 
 	Global.save_game()
-	
-	# --- INTEGRACIÓN HUD ---
-	# Buscamos el HUD de forma segura
+
 	var hud = get_tree().get_root().find_child("HUD", true, false)
 	
 	if hud and hud.has_method("UpdateSelectedProductByIndex"):
-		# CORRECCIÓN: Llamamos a la función correcta que definiste en el HUD script
 		hud.UpdateSelectedProductByIndex(index)
 	else:
-		print("Error: No se encontró el HUD o la función UpdateSelectedProductByIndex")
-	
-
+		print("Error: No se encontró el HUD o falta la función UpdateSelectedProductByIndex")
 
 # ---------------- MISIÓN ----------------
 func generate_new_delivery_goal() -> void:
@@ -164,21 +155,18 @@ func generate_new_delivery_goal() -> void:
 		var amount = randi_range(MIN_AMOUNT, MAX_AMOUNT)
 		objetivos_entrega[product.tipo_comida] = amount
 
-	print("--- Nuevo Objetivo de Entrega Generado ---")
+	print("--- Nuevo Objetivo generado ---")
 	for p in objetivos_entrega.keys():
 		print("Entregar %d de %s" % [objetivos_entrega[p], p])
-	print("------------------------------------------")
-	# ⚠️ NO LLAMAMOS AL HUD AQUÍ, lo llamamos en _ready para que el flujo sea más limpio
-	#    o desde el gestor de misiones si es una función de reinicio.
+
 func track_delivery_progress(product_name: String, amount: int = 1) -> void:
 	if product_name in objetivos_entrega:
 		objetivos_entrega[product_name] = max(0, objetivos_entrega[product_name] - amount)
 		print("Entregado %d de %s. Quedan %d." % [amount, product_name, objetivos_entrega[product_name]])
-		
-		# ⚠️ LLAMADA CLAVE: Actualiza el HUD inmediatamente después de la resta
-		update_hud_goals() 
 
+		update_hud_goals()
 		check_for_mission_completion()
+
 		Global.set_money(Global.game_data["Money"] + (amount * 10))
 		Global.save_game()
 
@@ -188,15 +176,15 @@ func update_hud_goals():
 	if hud_node and hud_node.has_method("update_delivery_goals"):
 		hud_node.update_delivery_goals(objetivos_entrega, Global.products)
 	else:
-		print("ADVERTENCIA: No se encontró el HUD o falta la función update_delivery_goals.")
+		print("ADVERTENCIA: HUD no encontrado o falta método update_delivery_goals.")
 
-		
 func check_for_mission_completion() -> void:
 	var all_done = true
 	for v in objetivos_entrega.values():
 		if v > 0:
 			all_done = false
 			break
+
 	if all_done:
 		print("🎉 ¡MISIÓN COMPLETADA! 🎉")
 		Global.save_game()
@@ -218,17 +206,15 @@ func game_over():
 	var go_scene = preload("res://Escenas/game_over.tscn").instantiate()
 	get_tree().root.add_child(go_scene)
 
+# ---------------- RALENTIZACIÓN ----------------
 func slow_down(amount: float, duration: float):
-	# ✅ USAMOS SIEMPRE LA BASE REAL
 	var base_speed = Global.game_data["Base_Speed"]
 
-	# Si no está ralentizado, aplicar slow
 	if not is_slowed:
 		Global.game_data["speed"] = max(base_speed - amount, 0)
 		is_slowed = true
 		print("Jugador ralentizado a: ", Global.game_data["speed"])
 
-	# Crear timer si no existe
 	if slow_timer == null:
 		slow_timer = Timer.new()
 		add_child(slow_timer)
@@ -239,7 +225,6 @@ func slow_down(amount: float, duration: float):
 			print("Velocidad restaurada a: ", base_speed)
 		)
 
-	# Siempre reiniciar el tiempo
 	slow_timer.stop()
 	slow_timer.start(duration)
 

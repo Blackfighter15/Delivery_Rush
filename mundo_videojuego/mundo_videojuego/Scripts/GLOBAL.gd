@@ -23,7 +23,7 @@ var game_data : Dictionary = {
 	"current_product_index": 0,
 	"selected_product_name": "Pizza",
 	"MIN_AMOUNT": 1,
-	"MAX_AMOUNT": 5,
+	"MAX_AMOUNT": 1,
 	"speed": 200.0,
 	"Base_Speed": 200.0,
 	"Hearts": 3,

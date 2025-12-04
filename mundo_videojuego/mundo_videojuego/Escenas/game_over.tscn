@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cq8xaptsxfn4g"]
+[gd_scene load_steps=16 format=3 uid="uid://cq8xaptsxfn4g"]
 
 [ext_resource type="Script" uid="uid://chc72be2gcbo7" path="res://Scripts/game_over.gd" id="1_4tnjg"]
 [ext_resource type="Texture2D" uid="uid://yx2gxjtnjrv8" path="res://Assets/kenney_ui-pack/Vector/Yellow/button_rectangle_flat.svg" id="1_mkivq"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://d3b7fdcrd1ycu" path="res://Assets/kenney_ui-pack/Vector/Yellow/slide_hangle.svg" id="7_0vooy"]
 [ext_resource type="Texture2D" uid="uid://bioit7i71uqvi" path="res://Assets/kenney_ui-pack/Vector/Grey/arrow_basic_e_small.svg" id="8_40kah"]
 [ext_resource type="Texture2D" uid="uid://bbpneh8388gox" path="res://Assets/kenney_ui-pack/Vector/Grey/button_rectangle_gradient.svg" id="9_q4ujk"]
+[ext_resource type="AudioStream" uid="uid://d3wcs6dj4qrap" path="res://Musica y efectos de sonido/Pista5_Muerte_OI_MP3.mp3" id="10_4tnjg"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_37yi2"]
 texture = ExtResource("1_mkivq")
@@ -27,6 +28,7 @@ font_size = 70
 font_color = Color(0.93333334, 0.15294118, 0.2784314, 1)
 
 [node name="Game_Over" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,6 +40,7 @@ script = ExtResource("1_4tnjg")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+texture_filter = 1
 anchors_preset = -1
 anchor_left = 0.041
 anchor_top = 0.135
@@ -52,6 +55,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_37yi2")
 
 [node name="Panel" type="Panel" parent="CanvasLayer"]
+texture_filter = 1
 offset_left = 371.0
 offset_top = 210.0
 offset_right = 773.0
@@ -59,6 +63,7 @@ offset_bottom = 451.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_p8lll")
 
 [node name="TextureButton" type="TextureButton" parent="CanvasLayer"]
+texture_filter = 1
 anchors_preset = -1
 anchor_left = 0.54300004
 anchor_top = 0.73300004
@@ -73,6 +78,7 @@ texture_normal = ExtResource("3_4tnjg")
 texture_pressed = ExtResource("4_yev8a")
 
 [node name="TextureButton2" type="TextureButton" parent="CanvasLayer"]
+texture_filter = 1
 anchors_preset = -1
 anchor_left = 0.372
 anchor_top = 0.73
@@ -86,6 +92,7 @@ scale = Vector2(2.1407228, 2.024422)
 texture_normal = ExtResource("5_8i0n1")
 
 [node name="Panel2" type="Panel" parent="CanvasLayer"]
+texture_filter = 1
 offset_left = 324.0
 offset_top = 64.0
 offset_right = 364.0
@@ -94,22 +101,29 @@ scale = Vector2(12.556521, 3.0398324)
 theme_override_styles/panel = SubResource("StyleBoxTexture_lpj4v")
 
 [node name="ArrowBasicESmall" type="Sprite2D" parent="CanvasLayer"]
+texture_filter = 1
 position = Vector2(677, 515)
 scale = Vector2(3.0156248, 2.9843721)
 texture = ExtResource("8_40kah")
 
 [node name="SlideHangle" type="Sprite2D" parent="CanvasLayer"]
+texture_filter = 1
 position = Vector2(467, 513)
 scale = Vector2(2.75, 2.187501)
 texture = ExtResource("7_0vooy")
 
 [node name="Label" type="Label" parent="CanvasLayer"]
+texture_filter = 1
 offset_left = 425.0
 offset_top = 75.0
 offset_right = 805.0
 offset_bottom = 171.0
 text = "Perdiste"
 label_settings = SubResource("LabelSettings_s5ano")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_4tnjg")
+autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/TextureButton" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/TextureButton2" to="." method="_on_texture_button_2_pressed"]

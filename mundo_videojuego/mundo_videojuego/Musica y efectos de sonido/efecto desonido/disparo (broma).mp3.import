@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://csyqoo8uveiya"
+path="res://.godot/imported/disparo (broma).mp3-8554c4cd840f62b6d52dde1e2d8b6ff5.mp3str"
+
+[deps]
+
+source_file="res://Musica y efectos de sonido/efecto desonido/disparo (broma).mp3"
+dest_files=["res://.godot/imported/disparo (broma).mp3-8554c4cd840f62b6d52dde1e2d8b6ff5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
