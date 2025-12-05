@@ -1,7 +1,12 @@
+#Main_escene
 extends Node2D
 
 @export var total_entregas: int = 10
 @export var tiempo_spawn: float = 0.5    # cada cuánto se genera una nueva persona
+@export var escena_aviso: PackedScene
+@export var grupo_nivel_1: Node2D
+@export var grupo_nivel_2: Node2D
+@export var grupo_nivel_3: Node2D
 
 var entregas_realizadas: int = 0
 var spawn_timer: float = 0.0
@@ -13,11 +18,17 @@ var spawn_timer: float = 0.0
 @export var spawn_chance: float = 0.3
 @export var tipos_clientes: Array[ClienteDatos] # Array de tus recursos ClienteDatos
 
-@onready var blocks = [$"Primer Nivel", $"Primer Nivel2"]
+var blocks = []
 var personas_por_bloque = {}
 
 func _ready():
 	Global.load_game()
+	seleccionar_escenario_activo()
+	
+	if Global.has_signal("objetivo_completado"):
+		Global.objetivo_completado.connect(eliminar_clientes_existentes_por_tipo)
+	
+	mostrar_aviso_temporal()
 	spawn_timer = tiempo_spawn
 	
 	for block in blocks:
@@ -39,7 +50,13 @@ func _process(delta):
 					rightmost = b
 			
 			block.position.x = rightmost.position.x + block_width
-			limpiar_personas_del_bloque(block)
+			
+			# 1. Borrar personas viejas (ya lo tenías)
+			limpiar_personas_del_bloque(block) 
+			# 2. Resetear los markers para que puedan usarse de nuevo (NUEVO)
+			resetear_markers_del_bloque(block)
+			# 3. Opcional: Generar nuevas personas inmediatamente en el bloque nuevo
+			generar_personas_para_bloque(block)
 
  # 🕓 Control del tiempo
 	
@@ -48,6 +65,93 @@ func _process(delta):
 	if spawn_timer <= 0:
 		generar_persona_aleatoria()
 		spawn_timer = tiempo_spawn  # reiniciar el temporizador
+		
+		
+		
+# Esta función se llama automáticamente cuando el Global avisa que una comida se completó
+func eliminar_clientes_existentes_por_tipo(tipo_comida_completada: String):
+	print("🧹 Objetivo completado. Eliminando clientes restantes de: ", tipo_comida_completada)
+	
+	# Recorremos todos los bloques registrados
+	for block in personas_por_bloque:
+		var lista_personas = personas_por_bloque[block]
+		
+		# Iteramos AL REVÉS (de último a primero) para poder borrar elementos del array 
+		# sin causar errores de índice.
+		for i in range(lista_personas.size() - 1, -1, -1):
+			var persona = lista_personas[i]
+			
+			# Verificamos si la persona existe y tiene datos
+			if is_instance_valid(persona) and persona.datos_cliente:
+				
+				# ¿Es este cliente del tipo que acabamos de terminar?
+				if persona.datos_cliente.tipo_comida == tipo_comida_completada:
+					
+					# 1. ¡IMPORTANTE! Liberar el marker para que otro cliente pueda usarlo
+					if "current_marker" in persona and is_instance_valid(persona.current_marker):
+						persona.current_marker.set_meta("ocupado", false)
+					
+					# 2. Efecto visual opcional (si quieres que desaparezcan suavemente)
+					# Si no quieres animación, solo usa queue_free() directo
+					# crear_efecto_desaparicion(persona.global_position) 
+					
+					# 3. Eliminar la persona de la escena
+					persona.queue_free()
+					
+					# 4. Eliminar la referencia del array del bloque
+					lista_personas.remove_at(i)
+					
+					
+
+func seleccionar_escenario_activo():
+	# 1. Ocultamos TODOS primero para limpiar
+	if grupo_nivel_1: grupo_nivel_1.visible = false
+	if grupo_nivel_2: grupo_nivel_2.visible = false
+	if grupo_nivel_3: grupo_nivel_3.visible = false
+	
+	var nivel_actual = Global.game_data["Level"]
+	var contenedor_activo: Node2D = null
+
+	# 2. Lógica de grupos de 3 niveles
+	# Restamos 1 para trabajar con índices base 0 (0, 1, 2...)
+	# Dividimos por 3 para agrupar (1,2,3 dan 0 | 4,5,6 dan 1...)
+	# Usamos % 3 para que si llegas al nivel 10, vuelva a empezar el ciclo (0, 1, 2, 0...)
+	
+	var indice_escenario = int((nivel_actual - 1) / 3) % 3
+
+	match indice_escenario:
+		0:
+			contenedor_activo = grupo_nivel_1 # Niveles 1-3, 10-12...
+		1:
+			contenedor_activo = grupo_nivel_2 # Niveles 4-6, 13-15...
+		2:
+			contenedor_activo = grupo_nivel_3 # Niveles 7-9, 16-18...
+
+	# 3. Activamos el elegido y llenamos el array 'blocks'
+	if contenedor_activo:
+		contenedor_activo.visible = true
+		blocks = contenedor_activo.get_children()
+		print("🗺️ Escenario cargado para nivel ", nivel_actual, ": ", contenedor_activo.name)
+	else:
+		print("⚠️ Error: No se asignó un escenario. Usando Nivel 1 por defecto.")
+		if grupo_nivel_1:
+			grupo_nivel_1.visible = true
+			blocks = grupo_nivel_1.get_children()
+			
+
+func mostrar_aviso_temporal():
+	get_tree().paused = true
+	var aviso = escena_aviso.instantiate()
+	
+	add_child(aviso)
+	
+	
+	await get_tree().create_timer(3.0).timeout
+	
+	# 5. Borrar la escena
+	if is_instance_valid(aviso):
+		aviso.queue_free()
+	get_tree().paused = false
 
 func game_over():
 	get_tree().paused = true
@@ -143,12 +247,31 @@ func generar_personas_para_bloque(block):
 			spawn_points.append(child)
 	
 	for spawn_point in spawn_points:
+		# Verificamos que no esté ocupado antes de intentar spawnear (por seguridad)
+		if spawn_point.has_meta("ocupado") and spawn_point.get_meta("ocupado") == true:
+			continue
+
 		if randf() < spawn_chance:
 			var persona = persona_scene.instantiate()
 			asignar_tipo_cliente(persona)
 			add_child(persona)
 			persona.position = spawn_point.global_position
+			
+			# --- CORRECCIÓN CLAVE ---
+			# Marcamos el marker como ocupado
+			spawn_point.set_meta("ocupado", true)
+			
+			# Le pasamos la referencia a la persona
+			if "current_marker" in persona:
+				persona.current_marker = spawn_point
+			# ------------------------
+
 			personas_por_bloque[block].append(persona)
+			
+func resetear_markers_del_bloque(block):
+	var markers = block.find_children("*", "Marker2D", true)
+	for m in markers:
+		m.set_meta("ocupado", false)
 
 func limpiar_personas_del_bloque(block):
 	if block in personas_por_bloque:

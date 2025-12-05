@@ -1,0 +1,240 @@
+[gd_scene load_steps=14 format=3 uid="uid://dk8rxnpqv47lp"]
+
+[ext_resource type="Script" uid="uid://bbndr32qky7ld" path="res://Scripts/subir_estadisticas.gd" id="1_nr8yk"]
+[ext_resource type="Texture2D" uid="uid://dyrvxqrmr5qhw" path="res://Assets/kenney_ui-pack/Vector/Red/button_square_depth_border.svg" id="1_r5cxr"]
+[ext_resource type="Texture2D" uid="uid://g0apmmqbmxrg" path="res://Assets/kenney_ui-pack/Vector/Green/icon_cross.svg" id="2_ip3tn"]
+[ext_resource type="Texture2D" uid="uid://d0l46mon2nb5l" path="res://Assets/kenney_ui-pack/Vector/Blue/arrow_decorative_n.svg" id="3_gwsfp"]
+[ext_resource type="Texture2D" uid="uid://bp43kixk1y8gq" path="res://Assets/Diseno de motos2.png" id="4_ip3tn"]
+[ext_resource type="FontFile" uid="uid://cogtpnm5ulrec" path="res://Assets/kenney_ui-pack/Font/Kenney Future.ttf" id="5_gwsfp"]
+[ext_resource type="Texture2D" uid="uid://ycxova88qjgt" path="res://Assets/kenney_ui-pack/Vector/Grey/button_square_border.svg" id="7_2pjrc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_el8sn"]
+bg_color = Color(1, 0.8, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gwsfp"]
+font = ExtResource("5_gwsfp")
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_nr8yk"]
+font = ExtResource("5_gwsfp")
+font_size = 40
+font_color = Color(0.43441767, 0.69691426, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_d6j1u"]
+font = ExtResource("5_gwsfp")
+
+[sub_resource type="LabelSettings" id="LabelSettings_2pjrc"]
+font_color = Color(1, 0.18039216, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_em2qn"]
+font = ExtResource("5_gwsfp")
+font_color = Color(0, 0, 0, 1)
+
+[node name="Control" type="CanvasLayer"]
+process_mode = 3
+layer = 128
+script = ExtResource("1_nr8yk")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_el8sn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -336.0
+offset_top = -111.99997
+offset_right = -24.0
+offset_bottom = -39.99997
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.0946527, 2.3368878)
+
+[node name="Salud+" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("1_r5cxr")
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/Salud+"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 36.282864
+offset_top = 8.986297
+offset_right = 76.28287
+offset_bottom = 48.986298
+rotation = 0.7926255
+scale = Vector2(0.8790043, 0.8832147)
+texture = ExtResource("2_ip3tn")
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Velocidad+" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("1_r5cxr")
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/Velocidad+"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 14.151109
+offset_top = 14.121331
+offset_right = 54.151108
+offset_bottom = 54.12133
+scale = Vector2(1.088461, 0.4754848)
+texture = ExtResource("3_gwsfp")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/HBoxContainer/Velocidad+"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 13.196297
+offset_top = 23.963482
+offset_right = 53.196297
+offset_bottom = 63.96348
+scale = Vector2(1.1116074, 0.5001397)
+texture = ExtResource("3_gwsfp")
+
+[node name="TextureRect3" type="TextureRect" parent="Panel/HBoxContainer/Velocidad+"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 14.151109
+offset_top = 34.23355
+offset_right = 54.151108
+offset_bottom = 74.23355
+scale = Vector2(1.088461, 0.5182394)
+texture = ExtResource("3_gwsfp")
+
+[node name="Label2" type="Label" parent="Panel/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Moto+" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("1_r5cxr")
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/Moto+"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 17.372961
+offset_top = 13.693412
+offset_right = 57.372963
+offset_bottom = 53.693413
+texture = ExtResource("4_ip3tn")
+
+[node name="Label2" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 517.0
+offset_top = 393.0
+offset_right = 733.0
+offset_bottom = 480.0
+text = "Aumentar 
+Velocidad"
+label_settings = SubResource("LabelSettings_gwsfp")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 394.0
+offset_right = 456.0
+offset_bottom = 481.0
+text = "Aumentar 
+    Salud"
+label_settings = SubResource("LabelSettings_gwsfp")
+
+[node name="Label3" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 724.0
+offset_top = 394.0
+offset_right = 1005.0
+offset_bottom = 481.0
+text = "     Mejorar Moto
+(Ganas mas dinero)"
+label_settings = SubResource("LabelSettings_gwsfp")
+
+[node name="Label4" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = 165.0
+offset_right = 355.0
+offset_bottom = 210.0
+text = "$120"
+label_settings = SubResource("LabelSettings_nr8yk")
+
+[node name="Label4" type="Label" parent="Panel/Label4"]
+layout_mode = 0
+offset_left = 273.0
+offset_top = -3.0
+offset_right = 373.0
+offset_bottom = 42.0
+text = "$80"
+label_settings = SubResource("LabelSettings_nr8yk")
+
+[node name="Label4" type="Label" parent="Panel/Label4/Label4"]
+layout_mode = 0
+offset_left = 257.0
+offset_top = -1.0
+offset_right = 390.0
+offset_bottom = 44.0
+text = "$200"
+label_settings = SubResource("LabelSettings_nr8yk")
+
+[node name="Omitir" type="Button" parent="Panel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 362.0
+offset_top = 483.00003
+offset_right = 434.0
+offset_bottom = 555.0
+scale = Vector2(5.836494, 1.4937102)
+icon = ExtResource("7_2pjrc")
+
+[node name="Label" type="Label" parent="Panel/Omitir"]
+layout_mode = 0
+offset_left = 19.189602
+offset_top = 16.067354
+offset_right = 87.189606
+offset_bottom = 39.067356
+scale = Vector2(0.5272989, 2.2195432)
+text = "Omitir"
+label_settings = SubResource("LabelSettings_d6j1u")
+
+[node name="Advertencia" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 413.99997
+offset_top = 20.999992
+offset_right = 561.0
+offset_bottom = 43.999992
+scale = Vector2(2.0540748, 3.0017123)
+text = "Dinero insuficiente"
+label_settings = SubResource("LabelSettings_2pjrc")
+
+[node name="Label5" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 408.00003
+offset_top = 108.0
+offset_right = 571.0
+offset_bottom = 126.0
+scale = Vector2(1.2768002, 2.2185752)
+text = "Dinero Actual:"
+label_settings = SubResource("LabelSettings_em2qn")
+
+[node name="DineroActual" type="Label" parent="Panel/Label5"]
+layout_mode = 0
+offset_left = 166.04002
+offset_right = 206.04002
+offset_bottom = 18.0
+scale = Vector2(0.8498743, 0.8703215)
+text = "999"
+label_settings = SubResource("LabelSettings_em2qn")
+
+[connection signal="pressed" from="Panel/HBoxContainer/Salud+" to="." method="_on_salud_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/Velocidad+" to="." method="_on_velocidad_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/Moto+" to="." method="_on_moto_pressed"]
+[connection signal="pressed" from="Panel/Omitir" to="." method="_on_omitir_pressed"]

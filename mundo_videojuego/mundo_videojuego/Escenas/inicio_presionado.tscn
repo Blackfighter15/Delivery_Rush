@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bml0q77tr61fc"]
+[gd_scene load_steps=16 format=3 uid="uid://bml0q77tr61fc"]
 
 [ext_resource type="Texture2D" uid="uid://brxqi1eca63li" path="res://Assets/BackGroundInicio.png" id="1_0obls"]
 [ext_resource type="Script" uid="uid://cdsb1kxetnsnt" path="res://Scripts/inicio_presionado.gd" id="1_vu6lu"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://bbpxb66mo43lp" path="res://Assets/kenney_ui-pack/PNG/Red/Default/button_rectangle_depth_gradient.png" id="4_pixam"]
 [ext_resource type="FontFile" uid="uid://cogtpnm5ulrec" path="res://Assets/kenney_ui-pack/Font/Kenney Future.ttf" id="5_pixam"]
 [ext_resource type="FontFile" uid="uid://d16ypl06jv8i5" path="res://Assets/kenney_ui-pack/Font/Kenney Future Narrow.ttf" id="7_0wfaq"]
-[ext_resource type="AudioStream" uid="uid://boxdko87d5qs1" path="res://Musica y efectos de sonido/Pista3_Menu_WAV.wav" id="8_5u2kv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vu6lu"]
 font = ExtResource("5_pixam")
@@ -261,7 +260,6 @@ text = "Modo Ventana"
 label_settings = SubResource("LabelSettings_vjn4g")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_5u2kv")
 autoplay = true
 
 [connection signal="pressed" from="botoncomenzar" to="." method="_on_botoncomenzar_pressed"]

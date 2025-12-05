@@ -20,8 +20,8 @@ func _on_texture_button_2_pressed() -> void:
 	queue_free()
 
 func _on_texture_button_pressed() -> void:
-	# Reanudar el juego antes de recargar
-	get_tree().paused = false
-	get_tree().reload_current_scene()
-	# Eliminar la pantalla de game over
+	# En lugar de ir al nivel, vamos a la TIENDA/MEJORAS
+	var pantalla_mejoras = load("res://Escenas/Subir_Estadisticas.tscn").instantiate()
 	queue_free()
+	get_tree().root.add_child(pantalla_mejoras)
+	

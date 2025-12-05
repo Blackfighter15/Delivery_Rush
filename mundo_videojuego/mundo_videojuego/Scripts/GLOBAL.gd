@@ -1,11 +1,20 @@
+
 extends Node
 
 signal vidas_cambiadas(nuevas_vidas)
 signal dinero_cambiado(nuevo_dinero)
 signal producto_cambiado(nuevo_producto_index)
-
+signal skin_cambiada(nueva_textura)
+signal objetivo_completado(tipo_comida)
 
 var save_Path = "user://save_game.dat"
+
+var SKIN_PATHS := [
+	"res://Assets/Diseno de motos.png",
+	"res://Assets/Diseno de motos2.png",
+	"res://Assets/Diseno de motos3.png"
+	
+]
 
 # 🔹 Paths de productos
 var PRODUCT_PATHS := [
@@ -29,7 +38,8 @@ var game_data : Dictionary = {
 	"Hearts": 3,
 	"Max_Hearts": 3,
 	"Money": 0,
-	"Level":1
+	"Level":1,
+	"skin_index": 0
 }
 
 var LEVEL_CONFIG = {
@@ -40,7 +50,7 @@ var LEVEL_CONFIG = {
 	},
 	2: { 
 		"spawn_interval": 2.5, 
-		"speed_bonus": 500.0, 
+		"speed_bonus": 400.0, 
 		"enemy_chance": 0.3 
 	},
 	3: { 
@@ -80,6 +90,11 @@ func load_game() -> void:
 		var file = FileAccess.open(save_Path, FileAccess.READ)
 		game_data = file.get_var()
 		file = null
+		
+		# 🔹 Validación por si es un archivo de guardado viejo
+		if !game_data.has("skin_index"):
+			game_data["skin_index"] = 0 # Valor por defecto
+		
 		if !game_data.has("Hearts"):
 			game_data["Hearts"] = 3
 
@@ -133,17 +148,24 @@ func es_cliente_necesario(tipo_comida: String) -> bool:
 		return objetivos_activos[tipo_comida] > 0
 	return false
 
-# 3. El Player llama a esto cuando entrega algo con éxito
 func descontar_objetivo(tipo_comida: String):
 	if objetivos_activos.has(tipo_comida):
 		objetivos_activos[tipo_comida] -= 1
+		
 		# Evitamos números negativos
 		if objetivos_activos[tipo_comida] < 0:
 			objetivos_activos[tipo_comida] = 0
+			
 		print("📉 Restante en Global para ", tipo_comida, ": ", objetivos_activos[tipo_comida])
+		
+		# --- NUEVO CÓDIGO ---
+		# Si llegamos a 0, avisamos a todo el juego que este objetivo terminó
+		if objetivos_activos[tipo_comida] == 0:
+			print("🎉 ¡Objetivo completado! Eliminando clientes restantes de: ", tipo_comida)
+			objetivo_completado.emit(tipo_comida)
 
 func get_current_level_config() -> Dictionary:
-	var current_lvl = 1
+	var current_lvl = Global.game_data["Level"]
 	
 	# Si el nivel existe en el diccionario, lo devolvemos
 	if LEVEL_CONFIG.has(current_lvl):
@@ -153,3 +175,35 @@ func get_current_level_config() -> Dictionary:
 	# devolvemos la configuración del nivel más alto que tengas.
 	var max_defined_level = LEVEL_CONFIG.keys().max()
 	return LEVEL_CONFIG[max_defined_level]
+	
+	
+# Función para obtener la textura actual (para que el Player la use)
+func get_current_skin_texture() -> Texture2D:
+	var index = game_data["skin_index"]
+	
+	# Protección por si el índice se sale de rango
+	if index >= SKIN_PATHS.size():
+		index = SKIN_PATHS.size() - 1
+		
+	return load(SKIN_PATHS[index])
+
+# Función para MEJORAR la skin 
+func mejorar_skin():
+	var siguiente_nivel = game_data["skin_index"] + 1
+	
+	# Verificamos que exista una skin siguiente (que no sea mayor a 2)
+	if siguiente_nivel < SKIN_PATHS.size():
+		game_data["skin_index"] = siguiente_nivel
+		save_game()
+		
+		# Emitimos señal y notificamos
+		print("✨ Skin mejorada al nivel: ", siguiente_nivel)
+		skin_cambiada.emit(get_current_skin_texture())
+	else:
+		print("⚠️ Ya tienes la skin máxima.")
+
+
+func es_nivel_supervivencia() -> bool:
+	# El operador % (módulo) nos da el residuo de la división.
+	# Si nivel % 3 es 0, es un nivel múltiplo de 3.
+	return (game_data["Level"] % 3) == 0

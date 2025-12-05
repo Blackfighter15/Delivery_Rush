@@ -1,0 +1,123 @@
+[gd_scene load_steps=13 format=3 uid="uid://dtyy6145x3547"]
+
+[ext_resource type="Texture2D" uid="uid://cf0tv382rihvy" path="res://Assets/Personaje 6.png" id="1_v4gkk"]
+[ext_resource type="Texture2D" uid="uid://vu6y2ejd5knk" path="res://Assets/pizza_0002.png" id="2_20bf4"]
+[ext_resource type="Texture2D" uid="uid://1bpig3v126ty" path="res://Assets/Personaje 1.png" id="3_0358x"]
+[ext_resource type="Texture2D" uid="uid://jdr7kb56q0tn" path="res://Assets/hamburgesa.png" id="4_c0xj8"]
+[ext_resource type="Texture2D" uid="uid://dugqpkn2n7vby" path="res://Assets/Personaje 2.png" id="5_7e32q"]
+[ext_resource type="Texture2D" uid="uid://basdd2srs7gh" path="res://Assets/comidachina_intento2.png" id="6_x2qaa"]
+[ext_resource type="Texture2D" uid="uid://cb052k2wc307u" path="res://Assets/Personaje 5.png" id="7_17fg7"]
+[ext_resource type="Texture2D" uid="uid://cnm2j76rg06ae" path="res://Assets/sushi.png" id="8_f2q67"]
+[ext_resource type="Texture2D" uid="uid://cvmwkw7p6ob4u" path="res://Assets/kimbogyou.png" id="9_d8nqd"]
+[ext_resource type="Texture2D" uid="uid://ctuk0ykbiy82h" path="res://Assets/pollo_kfc _intento2.png" id="10_s6s82"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4gkk"]
+bg_color = Color(0.72901654, 0.5835583, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_plgw1"]
+font_size = 50
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -356.0
+offset_bottom = -222.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 202.0
+offset_top = 115.0
+offset_right = 202.0
+offset_bottom = 115.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.6475526, 0.605669)
+theme_override_styles/panel = SubResource("StyleBoxFlat_v4gkk")
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = 397.08444
+offset_top = 27.119678
+offset_right = 608.0845
+offset_bottom = 96.119675
+scale = Vector2(1.6367952, 1.904851)
+text = "Entregas"
+label_settings = SubResource("LabelSettings_plgw1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -347.0
+offset_top = -119.0
+offset_right = -11.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.0757961, 2.4578311)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_v4gkk")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_20bf4")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("3_0358x")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("4_c0xj8")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("5_7e32q")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("6_x2qaa")
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+texture = ExtResource("7_17fg7")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+texture = ExtResource("8_f2q67")
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer5"]
+layout_mode = 2
+texture = ExtResource("9_d8nqd")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/VBoxContainer5"]
+layout_mode = 2
+texture = ExtResource("10_s6s82")

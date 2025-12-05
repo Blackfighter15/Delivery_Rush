@@ -1,8 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://wcuve4sicr57"]
+[gd_scene load_steps=9 format=3 uid="uid://wcuve4sicr57"]
 
 [ext_resource type="Texture2D" uid="uid://dxfmlkwe8o7ft" path="res://Assets/HUD delibery.png" id="1_f31rt"]
 [ext_resource type="Script" uid="uid://3t7dvxouvs1t" path="res://Scripts/hud.gd" id="1_ja1d4"]
 [ext_resource type="Texture2D" uid="uid://cfapmykyavqbr" path="res://Assets/vidas.png" id="2_b7ubu"]
+[ext_resource type="Texture2D" uid="uid://yx2gxjtnjrv8" path="res://Assets/kenney_ui-pack/Vector/Yellow/button_rectangle_flat.svg" id="4_amwvk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amwvk"]
+atlas = ExtResource("2_b7ubu")
+region = Rect2(13.597825, 63.75918, 27.68879, 35.412453)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b7ubu"]
 atlas = ExtResource("1_f31rt")
@@ -15,10 +20,6 @@ region = Rect2(98.81204, 0.79973006, 28.230179, 13.356201)
 [sub_resource type="LabelSettings" id="LabelSettings_f31rt"]
 font_size = 30
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_amwvk"]
-atlas = ExtResource("2_b7ubu")
-region = Rect2(13.804024, 63.808125, 27.715591, 35.3458)
-
 [node name="HUD" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -27,6 +28,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ja1d4")
+heart_texture = SubResource("AtlasTexture_amwvk")
 
 [node name="Comida" type="TextureRect" parent="."]
 layout_mode = 0
@@ -72,31 +74,13 @@ size_flags_horizontal = 8
 text = "999"
 label_settings = SubResource("LabelSettings_f31rt")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+[node name="Vidas" type="HBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 77.0
 offset_top = 581.0
 offset_right = 265.0
 offset_bottom = 616.0
 scale = Vector2(0.7608608, 1.703566)
-
-[node name="vida 1" type="TextureRect" parent="HBoxContainer2"]
-texture_filter = 1
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-texture = SubResource("AtlasTexture_amwvk")
-
-[node name="vida 2" type="TextureRect" parent="HBoxContainer2"]
-texture_filter = 1
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-texture = SubResource("AtlasTexture_amwvk")
-
-[node name="vida 3" type="TextureRect" parent="HBoxContainer2"]
-texture_filter = 1
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-texture = SubResource("AtlasTexture_amwvk")
 
 [node name="GoalsContainer" type="HBoxContainer" parent="."]
 layout_direction = 1
@@ -113,3 +97,25 @@ offset_bottom = 610.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.3619108, 1.8698606)
+
+[node name="SurvivalContainer" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 206.0
+offset_top = -1.0
+offset_right = 246.0
+offset_bottom = 39.0
+
+[node name="background" type="TextureRect" parent="SurvivalContainer"]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 0
+offset_right = 700.0
+offset_bottom = 64.0
+scale = Vector2(0.99506396, 0.61448234)
+texture = ExtResource("4_amwvk")
+
+[node name="iconplayer" type="TextureRect" parent="SurvivalContainer/background"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+expand_mode = 1
