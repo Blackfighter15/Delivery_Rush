@@ -104,40 +104,63 @@ func eliminar_clientes_existentes_por_tipo(tipo_comida_completada: String):
 					
 
 func seleccionar_escenario_activo():
-	# 1. Ocultamos TODOS primero para limpiar
-	if grupo_nivel_1: grupo_nivel_1.visible = false
-	if grupo_nivel_2: grupo_nivel_2.visible = false
-	if grupo_nivel_3: grupo_nivel_3.visible = false
+	# 1. Apagamos visuales y MÚSICA de todos los grupos primero
+	if grupo_nivel_1: 
+		grupo_nivel_1.visible = false
+		controlar_musica(grupo_nivel_1, false) # False = Stop
+		
+	if grupo_nivel_2: 
+		grupo_nivel_2.visible = false
+		controlar_musica(grupo_nivel_2, false)
+		
+	if grupo_nivel_3: 
+		grupo_nivel_3.visible = false
+		controlar_musica(grupo_nivel_3, false)
 	
 	var nivel_actual = Global.game_data["Level"]
 	var contenedor_activo: Node2D = null
 
-	# 2. Lógica de grupos de 3 niveles
-	# Restamos 1 para trabajar con índices base 0 (0, 1, 2...)
-	# Dividimos por 3 para agrupar (1,2,3 dan 0 | 4,5,6 dan 1...)
-	# Usamos % 3 para que si llegas al nivel 10, vuelva a empezar el ciclo (0, 1, 2, 0...)
-	
+	# Tu lógica matemática original
 	var indice_escenario = int((nivel_actual - 1) / 3) % 3
 
 	match indice_escenario:
-		0:
-			contenedor_activo = grupo_nivel_1 # Niveles 1-3, 10-12...
-		1:
-			contenedor_activo = grupo_nivel_2 # Niveles 4-6, 13-15...
-		2:
-			contenedor_activo = grupo_nivel_3 # Niveles 7-9, 16-18...
+		0: contenedor_activo = grupo_nivel_1
+		1: contenedor_activo = grupo_nivel_2
+		2: contenedor_activo = grupo_nivel_3
 
-	# 3. Activamos el elegido y llenamos el array 'blocks'
+	# 3. Activamos el elegido y su música
 	if contenedor_activo:
 		contenedor_activo.visible = true
 		blocks = contenedor_activo.get_children()
-		print("🗺️ Escenario cargado para nivel ", nivel_actual, ": ", contenedor_activo.name)
+		
+		# --- ENCENDER LA MÚSICA AQUÍ ---
+		controlar_musica(contenedor_activo, true) # True = Play
+		# -------------------------------
+		
+		print("🗺️ Escenario cargado: ", contenedor_activo.name)
 	else:
-		print("⚠️ Error: No se asignó un escenario. Usando Nivel 1 por defecto.")
+		# Fallback por defecto (Nivel 1)
 		if grupo_nivel_1:
 			grupo_nivel_1.visible = true
 			blocks = grupo_nivel_1.get_children()
-			
+			controlar_musica(grupo_nivel_1, true)
+
+# --- NUEVA FUNCIÓN AUXILIAR INTELIGENTE ---
+func controlar_musica(grupo_padre: Node2D, reproducir: bool):
+	# find_child busca adentro del nodo, incluso si está en sub-carpetas (true)
+	# "MusicaFondo" debe ser el nombre exacto de tu AudioStreamPlayer
+	var audio_player = grupo_padre.find_child("MusicaFondo", true, false)
+	
+	if audio_player and audio_player is AudioStreamPlayer:
+		if reproducir:
+			if not audio_player.playing: # Solo dar play si no está sonando ya
+				audio_player.play()
+		else:
+			audio_player.stop()
+	else:
+		# Este print te ayudará a detectar si escribiste mal el nombre en algún nivel
+		if reproducir: 
+			print("⚠️ Advertencia: No se encontró 'MusicaFondo' dentro de ", grupo_padre.name)
 
 func mostrar_aviso_temporal():
 	get_tree().paused = true

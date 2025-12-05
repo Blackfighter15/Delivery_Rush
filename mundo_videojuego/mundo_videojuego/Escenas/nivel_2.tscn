@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://s651cru7561j"]
+[gd_scene load_steps=51 format=4 uid="uid://s651cru7561j"]
 
 [ext_resource type="Texture2D" uid="uid://jdwd7axht0tu" path="res://Nivel2/Assets Nivel2/Tileset/Diseño sin título.png" id="1_6c13k"]
 [ext_resource type="Texture2D" uid="uid://cugnnxu7acf4c" path="res://Nivel2/Assets Nivel2/Tileset/Tileset Spring.png" id="2_1j6b8"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bhjf6o67nr8mj" path="res://Nivel2/Assets Nivel2/Objects/Telaraña_1.png" id="16_vg8bd"]
 [ext_resource type="Texture2D" uid="uid://cwf2d0hifjh1k" path="res://Nivel2/Assets Nivel2/Objects/Grieta.png" id="17_hkbjv"]
 [ext_resource type="Texture2D" uid="uid://bg2jn20efh1xc" path="res://Nivel2/Assets Nivel2/Objects/Telaraña 2.png" id="18_ri5sv"]
+[ext_resource type="AudioStream" uid="uid://chjhb82mfg0sc" path="res://Musica y efectos de sonido/Pista2_Nivel2_MP3.mp3" id="19_1j6b8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8jn0f"]
 texture = ExtResource("1_6c13k")
@@ -9651,3 +9652,6 @@ position = Vector2(1265, -109)
 
 [node name="Marker2D11" type="Marker2D" parent="."]
 position = Vector2(1409, -108)
+
+[node name="MusicaFondo" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_1j6b8")

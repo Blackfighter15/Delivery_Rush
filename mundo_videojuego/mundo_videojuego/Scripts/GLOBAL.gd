@@ -1,4 +1,3 @@
-
 extends Node
 
 signal vidas_cambiadas(nuevas_vidas)
@@ -38,7 +37,7 @@ var game_data : Dictionary = {
 	"Hearts": 3,
 	"Max_Hearts": 3,
 	"Money": 0,
-	"Level":1,
+	"Level":7,
 	"skin_index": 0
 }
 
@@ -69,6 +68,21 @@ var LEVEL_CONFIG = {
 		"enemy_chance": 0.3 
 	},
 	6: { 
+		"spawn_interval": 1, 
+		"speed_bonus": 200.0, 
+		"enemy_chance": 0.7
+		},
+	7: { 
+		"spawn_interval": 1, 
+		"speed_bonus": 200.0, 
+		"enemy_chance": 0.7
+		},
+	8: { 
+		"spawn_interval": 2.5, 
+		"speed_bonus": 400.0, 
+		"enemy_chance": 0.3 
+	},
+	9: { 
 		"spawn_interval": 1, 
 		"speed_bonus": 200.0, 
 		"enemy_chance": 0.7
