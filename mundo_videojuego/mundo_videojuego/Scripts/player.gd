@@ -8,6 +8,7 @@ var slow_timer: Timer = null
 var is_slowed: bool = false
 var nivel_finalizado: bool = false
 @onready var sprite_moto = $AnimatedSprite2D
+var es_invencible: bool = false
 
 # Configuración de Supervivencia
 var tiempo_supervivencia: float = 45.0 # Duración en segundos para ganar
@@ -282,9 +283,6 @@ func game_win_sequence():
 	if hud and hud.has_method("update_survival_status"):
 		hud.update_survival_status(0, 1, false)
 
-	# Aumentar nivel
-	Global.game_data["Level"] += 1
-	Global.save_game()
 	
 	var victory = preload("res://Escenas/Pantalla_Victoria.tscn").instantiate()
 	victory.name = "PantallaVictoria_Unica"
@@ -296,11 +294,35 @@ func game_win_sequence():
 	get_tree().paused = true
 
 func take_damage(amount: int):
+	# 1. Si ya somos invencibles, ignoramos el golpe
+	if es_invencible:
+		return
+
+	# 2. Aplicamos el daño
 	Global.set_hearts(max(Global.game_data["Hearts"] - amount, 0))
-	print("Vidas restantes: ", Global.game_data.Hearts)
+	print("💔 Golpe recibido. Vidas restantes: ", Global.game_data.Hearts)
 	Global.save_game()
+
 	if Global.game_data.Hearts <= 0:
 		game_over()
+	else:
+		activar_invencibilidad()
+		
+func activar_invencibilidad():
+	es_invencible = true
+	
+	# Opcional: Parpadeo visual para indicar que te dieron
+	var tween = create_tween()
+	# Hace que el sprite parpadee (se haga medio transparente) 3 veces
+	for i in range(3):
+		tween.tween_property(self, "modulate:a", 0.5, 0.1) # Transparente
+		tween.tween_property(self, "modulate:a", 1.0, 0.1) # Visible
+	
+	# Esperamos 1.5 segundos (o el tiempo que quieras)
+	await get_tree().create_timer(1.5).timeout
+	
+	es_invencible = false
+	print("🛡️ Invencibilidad terminada")
 
 func game_over():
 	# Ocultar HUD de supervivencia si estaba activo

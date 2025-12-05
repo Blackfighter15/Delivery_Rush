@@ -3,6 +3,7 @@ extends CanvasLayer
 # --- 1. REFERENCIA AL LABEL (Ajusta la ruta si tu Label tiene otro nombre) ---
 @onready var warning_label =  $Panel/Advertencia
 @onready var Dinero = $Panel/Label5/DineroActual
+var avanzando_nivel: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -94,9 +95,17 @@ func mostrar_dinero() -> void:
 		Dinero.visible = true
 
 func avanzar_nivel():
+	# Si ya estamos avanzando, no hacemos nada
+	if avanzando_nivel:
+		return
+	
+	# Activamos el candado
+	avanzando_nivel = true
+	
 	Global.game_data["Level"] += 1
 	Global.save_game()
 	print("🚀 Iniciando Nivel: ", Global.game_data["Level"])
+	
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	queue_free()

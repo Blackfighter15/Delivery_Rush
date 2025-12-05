@@ -3,6 +3,7 @@ extends Control
 @onready var boton_reintentar = $CanvasLayer/TextureButton
 @onready var boton_regresar = $CanvasLayer/TextureButton2
 
+
 func _ready():
 	# Configurar este nodo para que funcione aunque el árbol esté pausado
 	process_mode = Node.PROCESS_MODE_ALWAYS

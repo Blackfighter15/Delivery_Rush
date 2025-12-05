@@ -57,6 +57,21 @@ var LEVEL_CONFIG = {
 		"spawn_interval": 1, 
 		"speed_bonus": 200.0, 
 		"enemy_chance": 0.7
+		},
+	4: { 
+		"spawn_interval": 1, 
+		"speed_bonus": 200.0, 
+		"enemy_chance": 0.7
+		},
+	5: { 
+		"spawn_interval": 2.5, 
+		"speed_bonus": 400.0, 
+		"enemy_chance": 0.3 
+	},
+	6: { 
+		"spawn_interval": 1, 
+		"speed_bonus": 200.0, 
+		"enemy_chance": 0.7
 		}
 }
 

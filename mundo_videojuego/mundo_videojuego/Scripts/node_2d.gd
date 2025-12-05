@@ -10,7 +10,7 @@ extends Node2D
 
 var entregas_realizadas: int = 0
 var spawn_timer: float = 0.0
-
+var nivel_terminado: bool = false
 
 @export var scroll_speed: float = 120.0
 @export var block_width: int = 2000
@@ -154,11 +154,19 @@ func mostrar_aviso_temporal():
 	get_tree().paused = false
 
 func game_over():
+	# Doble verificación por seguridad
+	if get_tree().paused: 
+		return
+		
 	get_tree().paused = true
 	# Cargar y mostrar la escena de game over
 	var game_over_scene = preload("res://Escenas/game_over.tscn")
 	var game_over_instance = game_over_scene.instantiate()
-	get_tree().root.add_child(game_over_instance)
+	
+	# Asegúrate de que solo haya UNA instancia de game over
+	if not get_tree().root.has_node("GameOverScreen"): # Opcional: dale nombre a tu nodo
+		game_over_instance.name = "GameOverScreen"
+		get_tree().root.add_child(game_over_instance)
 	
 func generar_persona_aleatoria():
 	# 1. Elegir un bloque al azar
@@ -232,12 +240,16 @@ func asignar_tipo_cliente(persona_instancia):
 		print("👤 Generado cliente de: ", datos_aleatorios.tipo_comida)
 	
 func registrar_entrega():
+	# Si el nivel ya terminó, ignoramos cualquier entrega extra
+	if nivel_terminado:
+		return
+
 	entregas_realizadas += 1
 	print("📦 Entrega realizada: ", entregas_realizadas, "/", total_entregas)
+	
 	if entregas_realizadas >= total_entregas:
+		nivel_terminado = true  # <--- ACTIVAMOS EL CANDADO
 		game_over()
-
-
 
 func generar_personas_para_bloque(block):
 	# Buscar todos los Marker2D en este bloque
