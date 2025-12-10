@@ -37,7 +37,7 @@ var game_data : Dictionary = {
 	"Hearts": 3,
 	"Max_Hearts": 3,
 	"Money": 0,
-	"Level":7,
+	"Level":8,
 	"skin_index": 0
 }
 
@@ -86,7 +86,12 @@ var LEVEL_CONFIG = {
 		"spawn_interval": 1, 
 		"speed_bonus": 200.0, 
 		"enemy_chance": 0.7
-		}
+		},
+	10: { 
+		"spawn_interval": 2.5, 
+		"speed_bonus": 400.0, 
+		"enemy_chance": 0.3 
+	},
 }
 
 # 🔹 Productos cargados en memoria

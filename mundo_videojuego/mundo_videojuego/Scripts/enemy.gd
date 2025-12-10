@@ -75,3 +75,5 @@ func _on_body_entered(body):
 
 	if body.has_method("slow_down"):
 		body.slow_down(100, 3)
+		
+	queue_free()

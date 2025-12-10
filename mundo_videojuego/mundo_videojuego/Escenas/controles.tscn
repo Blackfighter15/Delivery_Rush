@@ -1,0 +1,138 @@
+[gd_scene load_steps=14 format=3 uid="uid://dyyhktlf2ipy7"]
+
+[ext_resource type="Script" uid="uid://bmacog3v33u4u" path="res://Escenas/controles.gd" id="1_2328x"]
+[ext_resource type="Texture2D" uid="uid://dkhhsagvqjlqm" path="res://Assets/kenney_input-prompts_1.4.1/Keyboard & Mouse/Double/keyboard_a.png" id="1_abe4w"]
+[ext_resource type="Texture2D" uid="uid://crooj4ojhtv57" path="res://Assets/kenney_input-prompts_1.4.1/Keyboard & Mouse/Double/keyboard_d.png" id="2_2328x"]
+[ext_resource type="Texture2D" uid="uid://ccnsade88mvhb" path="res://Assets/kenney_input-prompts_1.4.1/Keyboard & Mouse/Double/keyboard_w.png" id="3_flbdd"]
+[ext_resource type="Texture2D" uid="uid://cfd4xabe6v774" path="res://Assets/kenney_input-prompts_1.4.1/Keyboard & Mouse/Double/keyboard_s.png" id="4_2oa50"]
+[ext_resource type="Texture2D" uid="uid://u85vhxh0l8cy" path="res://Assets/kenney_input-prompts_1.4.1/Keyboard & Mouse/Double/keyboard_q.png" id="5_j6w3y"]
+[ext_resource type="Texture2D" uid="uid://d0ab75jw22v0o" path="res://Assets/kenney_input-prompts_1.4.1/Keyboard & Mouse/Double/keyboard_e.png" id="6_enwxh"]
+[ext_resource type="Texture2D" uid="uid://dtfik0lkycu36" path="res://Assets/kenney_input-prompts_1.4.1/Keyboard & Mouse/Double/mouse_left_outline.png" id="7_sokvl"]
+[ext_resource type="FontFile" uid="uid://cogtpnm5ulrec" path="res://Assets/kenney_ui-pack/Font/Kenney Future.ttf" id="8_wglsn"]
+[ext_resource type="Texture2D" uid="uid://c1w37deng0fyy" path="res://Assets/kenney_ui-pack/Vector/Red/button_round_depth_flat.svg" id="9_srqrc"]
+[ext_resource type="Texture2D" uid="uid://u5tcfcyuapg0" path="res://Assets/kenney_ui-pack/Vector/Grey/icon_cross.svg" id="10_l3qgu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfqyp"]
+bg_color = Color(0.89950615, 0.7839437, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_oymm2"]
+font = ExtResource("8_wglsn")
+
+[node name="Controles" type="CanvasLayer"]
+script = ExtResource("1_2328x")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cfqyp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 50.0
+offset_right = 322.0
+offset_bottom = 574.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_abe4w")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_2328x")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("3_flbdd")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("4_2oa50")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("5_j6w3y")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("6_enwxh")
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_sokvl")
+
+[node name="Label" type="Label" parent="Panel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 383.0
+offset_top = 67.0
+offset_right = 627.0
+offset_bottom = 90.0
+scale = Vector2(2.4731636, 5.601878)
+text = "Retroceder / Avanzar"
+label_settings = SubResource("LabelSettings_oymm2")
+
+[node name="Label2" type="Label" parent="Panel"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 328.0
+offset_top = 202.0
+offset_right = 636.0
+offset_bottom = 225.0
+scale = Vector2(2.4731636, 5.601878)
+text = "Carril Arriba / Carril Abajo"
+label_settings = SubResource("LabelSettings_oymm2")
+
+[node name="Label2" type="Label" parent="Panel/Label2"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 3.2347193
+offset_top = 21.778412
+offset_right = 446.2347
+offset_bottom = 39.77841
+scale = Vector2(0.6900566, 1.041259)
+text = "Producto Anterior / Producto Siguiente"
+label_settings = SubResource("LabelSettings_oymm2")
+
+[node name="Label2" type="Label" parent="Panel/Label2/Label2"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 3.5157113
+offset_top = 20.91546
+offset_right = 213.51572
+offset_bottom = 38.91546
+scale = Vector2(2.0231304, 0.9958976)
+text = "Disparar Producto"
+label_settings = SubResource("LabelSettings_oymm2")
+
+[node name="Salir" type="Button" parent="Panel/Label2/Label2"]
+layout_mode = 0
+offset_left = 414.26846
+offset_top = -54.68878
+offset_right = 486.26846
+offset_bottom = 17.311218
+scale = Vector2(0.8750623, 0.2449302)
+icon = ExtResource("9_srqrc")
+
+[node name="TextureRect" type="TextureRect" parent="Panel/Label2/Label2/Salir"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 13.0
+offset_right = 55.0
+offset_bottom = 53.0
+texture = ExtResource("10_l3qgu")
+
+[connection signal="pressed" from="Panel/Label2/Label2/Salir" to="." method="_on_salir_pressed"]

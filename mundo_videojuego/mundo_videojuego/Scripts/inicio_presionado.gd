@@ -60,3 +60,8 @@ func actualizar_labels_pantalla():
 	else:
 		PantallaCompletaE.visible = false
 		ModoVentana.visible = true
+
+
+func _on_boton_controles_pressed() -> void:
+	var pantalla_controles = load("res://Escenas/controles.tscn").instantiate()
+	get_tree().root.add_child(pantalla_controles)

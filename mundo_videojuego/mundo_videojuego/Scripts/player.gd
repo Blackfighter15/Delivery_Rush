@@ -9,6 +9,7 @@ var is_slowed: bool = false
 var nivel_finalizado: bool = false
 @onready var sprite_moto = $AnimatedSprite2D
 var es_invencible: bool = false
+var dinero_al_inicio: int = 0
 
 # Configuración de Supervivencia
 var tiempo_supervivencia: float = 45.0 # Duración en segundos para ganar
@@ -26,6 +27,7 @@ func _ready():
 	# 🔹 Cargar datos del Global
 	Global.load_game()
 	nivel_finalizado = false
+	dinero_al_inicio = Global.game_data["Money"]
 	actualizar_apariencia()
 	Global.skin_cambiada.connect(_on_skin_cambiada)
 	Global.reiniciar_datos_sesion()
@@ -325,10 +327,33 @@ func activar_invencibilidad():
 	print("🛡️ Invencibilidad terminada")
 
 func game_over():
+	# Doble verificación por seguridad
+	if get_tree().paused: return
+	
+	# --- LÓGICA DE PERDER DINERO ---
+	var dinero_actual = Global.game_data["Money"]
+	var dinero_ganado_en_sesion = dinero_actual - dinero_al_inicio
+	
+	# Solo restamos si efectivamente ganaste algo (para evitar bugs si quedaste en negativo)
+	if dinero_ganado_en_sesion > 0:
+		Global.game_data["Money"] -= dinero_ganado_en_sesion
+		print("💸 Has muerto. Perdiste las ganancias de hoy: $", dinero_ganado_en_sesion)
+	# -------------------------------
+
 	# Ocultar HUD de supervivencia si estaba activo
 	var hud = get_tree().current_scene.get_node_or_null("HUD")
 	if hud and hud.has_method("update_survival_status"):
 		hud.update_survival_status(0, 1, false)
+		
+	Global.save_game() # Guardamos el dinero ya restado
+	
+	get_tree().paused = true
+	
+	# Asegúrate de que solo haya UNA instancia de game over
+	if not get_tree().root.has_node("GameOverScreen"):
+		var go_scene = preload("res://Escenas/game_over.tscn").instantiate()
+		go_scene.name = "GameOverScreen"
+		get_tree().root.add_child(go_scene)
 		
 	Global.save_game()
 	get_tree().paused = true

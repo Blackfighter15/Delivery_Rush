@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Mundo videojuego (0.2)"
-run/main_scene="uid://knnf8qipor43"
+config/name="Delivery Rush"
+run/main_scene="uid://37htuga4saay"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.9052003, 0.8263157, 0, 1)
+boot_splash/image="uid://dy8w4u8qjski6"
+config/icon="uid://dy8w4u8qjski6"
+config/windows_native_icon="uid://dy8w4u8qjski6"
+boot_splash/minimum_display_time=1000
 
 [autoload]
 

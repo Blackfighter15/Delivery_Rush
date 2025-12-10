@@ -266,4 +266,5 @@ autoplay = true
 [connection signal="pressed" from="botonsalir" to="." method="_on_botonsalir_pressed"]
 [connection signal="pressed" from="botonconfigurar" to="." method="_on_botonconfigurar_pressed"]
 [connection signal="pressed" from="Panel/botonVolver" to="." method="_on_boton_volver_pressed"]
+[connection signal="pressed" from="Panel/botonControles" to="." method="_on_boton_controles_pressed"]
 [connection signal="pressed" from="Panel/botonPantalla" to="." method="_on_boton_pantalla_pressed"]

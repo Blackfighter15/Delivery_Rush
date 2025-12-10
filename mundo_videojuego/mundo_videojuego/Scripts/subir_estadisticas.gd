@@ -99,15 +99,30 @@ func avanzar_nivel():
 	if avanzando_nivel:
 		return
 	
-	# Activamos el candado
+	# Activamos el candado para evitar doble clic
 	avanzando_nivel = true
 	
+	# 1. Subimos el nivel
 	Global.game_data["Level"] += 1
 	Global.save_game()
-	print("🚀 Iniciando Nivel: ", Global.game_data["Level"])
 	
+	# 2. Despausamos el juego (importante hacerlo antes de cambiar escena)
 	get_tree().paused = false
-	get_tree().reload_current_scene()
+	
+	# --- AQUÍ ESTÁ EL CAMBIO ---
+	# Si el nivel al que vamos es mayor que 10 (o sea, acabamos de terminar el 10 y vamos al 11)
+	if Global.game_data["Level"] > 10:
+		print("🏆 ¡Juego Terminado! Nivel máximo superado.")
+		
+		# Cambia esta ruta por la de tu escena de "Fin del Juego" o "Victoria"
+		get_tree().change_scene_to_file("res://Escenas/Victoria.tscn") 
+		
+	else:
+		# Comportamiento normal: Reiniciar la escena para jugar el siguiente nivel
+		print("🚀 Iniciando Nivel: ", Global.game_data["Level"])
+		get_tree().reload_current_scene()
+	
+	# 3. Eliminamos la pantalla de la tienda
 	queue_free()
 
 func _on_omitir_pressed() -> void:
