@@ -68,6 +68,11 @@ func _ready():
 
 	set_process(true)
 	
+	
+	# Forzamos que la vida actual sea igual a la máxima al nacer
+	Global.game_data["Hearts"] = Global.game_data["Max_Hearts"]
+	Global.vidas_cambiadas.emit(Global.game_data["Hearts"]) # Actualiza el HUD
+	print("🚑 VIDA INICIAL FORZADA A: ", Global.game_data["Hearts"])
 # ---------------- MODO SUPERVIVENCIA ----------------
 func iniciar_modo_supervivencia():
 	print("💀 ¡MODO SUPERVIVENCIA ACTIVO! Sobrevive " + str(tiempo_supervivencia) + " segundos.")
@@ -325,6 +330,10 @@ func activar_invencibilidad():
 	
 	es_invencible = false
 	print("🛡️ Invencibilidad terminada")
+	
+	print("--- DIAGNÓSTICO DE DAÑO ---")
+	print("Vidas antes del golpe: ", Global.game_data["Hearts"])
+	print("Vidas MÁXIMAS reales: ", Global.game_data["Max_Hearts"])
 
 func game_over():
 	# Doble verificación por seguridad

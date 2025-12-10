@@ -58,9 +58,9 @@ var LEVEL_CONFIG = {
 		"enemy_chance": 0.7
 		},
 	4: { 
-		"spawn_interval": 1, 
-		"speed_bonus": 200.0, 
-		"enemy_chance": 0.7
+		"spawn_interval": 2.5, 
+		"speed_bonus": 0.0, 
+		"enemy_chance": 0.2
 		},
 	5: { 
 		"spawn_interval": 2.5, 
@@ -73,9 +73,9 @@ var LEVEL_CONFIG = {
 		"enemy_chance": 0.7
 		},
 	7: { 
-		"spawn_interval": 1, 
-		"speed_bonus": 200.0, 
-		"enemy_chance": 0.7
+		"spawn_interval": 2.5, 
+		"speed_bonus": 0.0, 
+		"enemy_chance": 0.2
 		},
 	8: { 
 		"spawn_interval": 2.5, 
@@ -125,12 +125,19 @@ func load_game() -> void:
 		game_data = file.get_var()
 		file = null
 		
-		# 🔹 Validación por si es un archivo de guardado viejo
+		# --- VALIDACIONES DE SEGURIDAD ---
 		if !game_data.has("skin_index"):
-			game_data["skin_index"] = 0 # Valor por defecto
+			game_data["skin_index"] = 0 
 		
+		# CORRECCIÓN: Si no hay vidas guardadas, usa el Máximo, NO un 3 fijo.
 		if !game_data.has("Hearts"):
-			game_data["Hearts"] = 3
+			# Si existe Max_Hearts úsalo, si no, usa 3 como último recurso
+			game_data["Hearts"] = game_data.get("Max_Hearts", 3)
+			
+		print("📂 Carga completa. Hearts: ", game_data["Hearts"], " | Max: ", game_data.get("Max_Hearts", 3))
+	else:
+		# Si no hay archivo, guardar los valores por defecto actuales
+		save_game()
 
 func reset_hearts():
 	set_hearts(game_data["Max_Hearts"])
