@@ -332,33 +332,27 @@ func game_over():
 	
 	# --- LÓGICA DE PERDER DINERO ---
 	var dinero_actual = Global.game_data["Money"]
-	var dinero_ganado_en_sesion = dinero_actual - dinero_al_inicio
+	var dinero_ganado_en_sesion = dinero_actual - dinero_al_inicio # Asegúrate que 'dinero_al_inicio' esté definido en el script
 	
-	# Solo restamos si efectivamente ganaste algo (para evitar bugs si quedaste en negativo)
 	if dinero_ganado_en_sesion > 0:
 		Global.game_data["Money"] -= dinero_ganado_en_sesion
 		print("💸 Has muerto. Perdiste las ganancias de hoy: $", dinero_ganado_en_sesion)
 	# -------------------------------
 
-	# Ocultar HUD de supervivencia si estaba activo
+	# Ocultar HUD
 	var hud = get_tree().current_scene.get_node_or_null("HUD")
 	if hud and hud.has_method("update_survival_status"):
 		hud.update_survival_status(0, 1, false)
 		
-	Global.save_game() # Guardamos el dinero ya restado
-	
+	Global.save_game()
 	get_tree().paused = true
 	
 	# Asegúrate de que solo haya UNA instancia de game over
 	if not get_tree().root.has_node("GameOverScreen"):
 		var go_scene = preload("res://Escenas/game_over.tscn").instantiate()
-		go_scene.name = "GameOverScreen"
+		go_scene.name = "GameOverScreen" # Importante para que el 'has_node' funcione la próxima vez
 		get_tree().root.add_child(go_scene)
-		
-	Global.save_game()
-	get_tree().paused = true
-	var go_scene = preload("res://Escenas/game_over.tscn").instantiate()
-	get_tree().root.add_child(go_scene)
+	
 
 # ---------------- RALENTIZACIÓN ----------------
 func slow_down(amount: float, duration: float):

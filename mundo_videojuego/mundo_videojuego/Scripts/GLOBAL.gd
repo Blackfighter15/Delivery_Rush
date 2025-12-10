@@ -37,7 +37,7 @@ var game_data : Dictionary = {
 	"Hearts": 3,
 	"Max_Hearts": 3,
 	"Money": 0,
-	"Level":8,
+	"Level":1,
 	"skin_index": 0
 }
 
